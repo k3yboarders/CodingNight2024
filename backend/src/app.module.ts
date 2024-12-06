@@ -7,9 +7,10 @@ import { ArticleModule } from './article/article.module';
 import { NoteModule } from './note/note.module';
 import { SettingsModule } from './settings/settings.module';
 import { ChallengeModule } from './challenge/challenge.module';
+import { SleepTrackerModule } from './sleep-tracker/sleep-tracker.module';
 
 @Module({
   controllers: [AppController],
-  imports: [AuthModule, DbModule, QuotesModule, ArticleModule, SettingsModule, NoteModule, ChallengeModule],
+  imports: [AuthModule, DbModule, QuotesModule, ArticleModule, SettingsModule, NoteModule, ChallengeModule, SleepTrackerModule],
 })
 export class AppModule {}
