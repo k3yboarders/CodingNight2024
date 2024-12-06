@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { forwardRef, Global, Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { RegisterModule } from './register/register.module';
 import { PassportModule } from '@nestjs/passport';
@@ -9,6 +9,7 @@ import { LoginModule } from './login/login.module';
 
 const { SECRET: secret = 'secret' } = process.env;
 
+@Global()
 @Module({
   imports: [
     forwardRef(() => RegisterModule),

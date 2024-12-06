@@ -49,6 +49,7 @@ export class AuthService {
     }
     const jwt = await this.generateAuthJwt({
       userId: user.id,
+      role: user.role,
     });
 
     return {
@@ -72,6 +73,8 @@ export class AuthService {
       },
       select: {
         id: true,
+        username: true,
+        role: true,
         email: true,
       },
     });
@@ -109,6 +112,8 @@ export class AuthService {
       select: {
         id: true,
         username: true,
+        email: true,
+        role: true,
       },
     });
   }
