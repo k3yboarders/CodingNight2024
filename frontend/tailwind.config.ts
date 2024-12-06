@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         background: "var(--background)",
+        'background-secondary': "#100D15",
         foreground: "var(--foreground)",
         'gradient-1': '#7286ff',
         'gradient-2': '#fe7587',
