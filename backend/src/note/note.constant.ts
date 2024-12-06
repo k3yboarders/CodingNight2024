@@ -1,0 +1,1 @@
+export const SUGGESTIONS_BASED_ON_HISTORY_PROMPT = `In json array below is history of my emotions and my experiences. Based on the latest note give me some advices what should i do. Answer compactly but not too shortly in polish. Talk to me.`

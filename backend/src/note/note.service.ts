@@ -1,10 +1,12 @@
 import { NoteDto } from './dto/note.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
+import { GeminiService } from 'src/gemini/gemini.service';
+import { SUGGESTIONS_BASED_ON_HISTORY_PROMPT } from './note.constant';
 
 @Injectable()
 export class NoteService {
-  constructor(private readonly prisma: DbService) {}
+  constructor(private readonly prisma: DbService, private readonly gemini: GeminiService) {}
 
   async getAllUsersNotes(userId: string) {
     return await this.prisma.note.findMany({
@@ -45,4 +47,13 @@ export class NoteService {
       where: { id: noteId },
     });
   }
+  async getSuggestions(userId: string) {
+      const users = await this.getAllUsersNotes(userId);
+      const arrayOfNotes = users.map((user) => user.content);
+      if (!arrayOfNotes.length) {
+        throw new HttpException('No suggestions found', HttpStatus.NOT_FOUND);
+      }
+      const readPrompt = SUGGESTIONS_BASED_ON_HISTORY_PROMPT + JSON.stringify(arrayOfNotes);
+      return this.gemini.generateText(readPrompt);
+  };
 }

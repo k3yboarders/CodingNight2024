@@ -19,6 +19,11 @@ import { AuthGuard } from '@nestjs/passport';
 export class NoteController {
   constructor(private readonly noteService: NoteService) {}
 
+  @Get('/suggestion')
+  async getSuggestions(@GetUser() user: JwtAuthDto) {
+    return await this.noteService.getSuggestions(user.userId);
+  }
+
   @Get()
   async getAllNotes(@GetUser() user: JwtAuthDto) {
     return await this.noteService.getAllUsersNotes(user.userId);
