@@ -23,6 +23,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:reset": "npx prisma db push --force-reset"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed/seed.ts"
+  },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.2",
