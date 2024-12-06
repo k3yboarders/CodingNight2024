@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "@/actions/auth";
 import { LoginSchema } from "@/schemas/login";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export const LoginForm = () => {
     const [error, setError] = useState<string | null>("");
@@ -30,6 +31,9 @@ export const LoginForm = () => {
                 .then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
+                    setTimeout(() => {
+                        redirect("/app");
+                    }, 1000);
                 })
                 .catch(() => {
                     setError("Cos poszło nie tak!");

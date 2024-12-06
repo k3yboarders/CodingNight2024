@@ -1,4 +1,5 @@
 import { NoteCard } from "@/components/notes/note-card";
+import { FloatingButton } from "@/components/notes/new-note";
 
 export default function Notes() {
   const exampleNotes = [
@@ -17,6 +18,7 @@ export default function Notes() {
           <NoteCard key={index} content={note} />
       ))}
       </div>
+      <FloatingButton label="Dodaj notatkę" />
       </>
   );
 }

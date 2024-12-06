@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/notes/layout/navbar";
 
-export default function LandingLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default function AppLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <>
             <Navbar />

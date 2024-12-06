@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/actions/auth";
 import { RegisterSchema } from "@/schemas/register";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | null>("");
@@ -33,6 +34,9 @@ export const RegisterForm = () => {
                         setError(data.error);
                     } else {
                         setSuccess("Rejestracja zakończona sukcesem");
+                        setTimeout(() => {
+                            redirect("/login");
+                        }, 1000);
                     }
                 })
                 .catch(() => {
