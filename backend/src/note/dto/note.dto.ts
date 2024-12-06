@@ -6,6 +6,10 @@ export class NoteDto {
   content: string;
 
   @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsString()
   @IsUUID()
   userId: string;
 
