@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-const BACKEND_ORIGIN = 'localhost:5001';
+const BACKEND_ORIGIN = 'http://localhost:5001';
 
 export const backendRequest = async (
     path: string,
