@@ -20,10 +20,10 @@ model User {
   challenges          Challenge[]
   notes               Note[]
   userDailyChallenges UserDailyChallenge[]
-
   SleepRecord SleepRecord[]
-
   SleepAnalysis SleepAnalysis[]
+  messagesSent Message[] @relation("sender")
+  messagesReceived Message[] @relation("receiver")
 }
 
 model Article {
@@ -131,6 +131,24 @@ model SleepAnalysis {
   generatedAnalysis String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+
+}
+
+model Chat {
+  id  String @id @default(uuid())
+  messages Message[]
+}
+
+model Message {
+  id  String @id @default(uuid())
+  content String
+  createdAt DateTime @default(now())
+  senderId String
+  receiverId String
+  sender User @relation("sender", fields: [senderId], references: [id])
+  receiver User @relation("receiver", fields: [receiverId], references: [id])
+  chatId String
+  chat Chat @relation(fields: [chatId], references: [id])
 }
 
 enum Role {
