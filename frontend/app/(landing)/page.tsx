@@ -1,14 +1,13 @@
 import { Hero } from "@/components/landing/hero";
-import { Divider } from "@/components/landing/ui/divider";
-import { CtaCard } from "@/components/landing/cta-card";
+import { getRandomQuote } from "@/actions/quotes";
 
-export default function Home() {
+
+export default async function Home() {
+  const quote = await getRandomQuote();
+
   return (
       <>
-          <Hero />
-          <Divider />
-          <CtaCard />
-          <Divider />
+          <Hero quote={quote.data} />
       </>
   );
 }

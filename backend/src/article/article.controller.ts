@@ -23,18 +23,18 @@ export class ArticleController {
 
   @Get()
   async getArticles(@Query('categoryId') categoryId: string) {
-    return await this.articleService.getArticles(categoryId);
+    return this.articleService.getArticles(categoryId);
   }
 
   @Get('categories')
   async getArticleCategories() {
-    return await this.articleService.getArticleCategories;
+    return this.articleService.getArticleCategories;
   }
 
   @UseGuards(PsychologistGuard)
   @Post()
   async addArticle(@Body() data: ArticleDto, @GetUser() user: JwtAuthDto) {
-    return await this.articleService.addArticle(data, user.userId);
+    return this.articleService.addArticle(data, user.userId);
   }
 
   @UseGuards(PsychologistGuard)
@@ -44,16 +44,16 @@ export class ArticleController {
     @GetUser() user: JwtAuthDto,
     @Param('id') id: string,
   ) {
-    return await this.articleService.updateArticle(id, data, user.userId);
+    return this.articleService.updateArticle(id, data, user.userId);
   }
   @UseGuards(PsychologistGuard)
   @Delete(':id')
   async deleteArticle(@GetUser() user: JwtAuthDto, @Param('id') id: string) {
-    return await this.articleService.deleteArticle(id, user.userId);
+    return this.articleService.deleteArticle(id, user.userId);
   }
 
   @Post('bookmark/:id')
   async bookmarkArticle(@GetUser() user: JwtAuthDto, @Param('id') id: string) {
-    return await this.articleService.bookmarkArticle(id, user.userId);
+    return this.articleService.bookmarkArticle(id, user.userId);
   }
 }
