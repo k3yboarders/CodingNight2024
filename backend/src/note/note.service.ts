@@ -6,9 +6,15 @@ import { DbService } from 'src/db/db.service';
 export class NoteService {
   constructor(private readonly prisma: DbService) {}
 
-  async getNote(id: string) {
+  async getAllUsersNotes(userId: string) {
+    return await this.prisma.note.findMany({
+      where: { userId },
+    });
+  }
+
+  async getNote(id: string, userId: string) {
     return await this.prisma.note.findUnique({
-      where: { id },
+      where: { id, userId },
     });
   }
 
