@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-const BACKEND_ORIGIN = '';
+const BACKEND_ORIGIN = 'localhost:5001';
 
 export const backendRequest = async (
     path: string,
@@ -25,7 +25,6 @@ export const backendRequest = async (
         return await fetch(`${BACKEND_ORIGIN}/${path}`, {
             method,
             headers,
-            redirect: 'follow',
             body: body ? JSON.stringify(body) : undefined,
         });
     } catch (error) {

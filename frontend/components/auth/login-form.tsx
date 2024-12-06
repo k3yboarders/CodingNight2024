@@ -5,11 +5,8 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "@/actions/auth";
-
-const LoginSchema = z.object({
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-});
+import { LoginSchema } from "@/schemas/login";
+import Link from "next/link";
 
 export const LoginForm = () => {
     const [error, setError] = useState<string | null>("");
@@ -35,26 +32,24 @@ export const LoginForm = () => {
                     setSuccess(data.success);
                 })
                 .catch(() => {
-                    setError("Something went wrong!");
+                    setError("Cos poszło nie tak!");
                 });
         });
     };
 
     return (
+        <div className="rounded-[3rem] max-w-md p-[2px] bg-gradient-to-r from-gradient-1 to-gradient-2">
         <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md max-w-md mx-auto border border-transparent bg-clip-padding"
-            style={{
-                borderImageSource: "linear-gradient(to right, #6a11cb, #2575fc)",
-                borderImageSlice: 1,
-            }}
+            className="space-y-6 p-10 shadow-md bg-background rounded-[calc(3rem-2px)]"
         >
+            <h1 className="text-center text-3xl">Zaloguj się do GrowCalmly</h1>
             <div className="mb-4">
                 <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                 >
-                    Email
+                    E-mail
                 </label>
                 <input
                     {...form.register("email")}
@@ -62,13 +57,7 @@ export const LoginForm = () => {
                     placeholder="example@example.com"
                     type="email"
                     id="email"
-                    className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    style={{
-                        border: "2px solid transparent",
-                        backgroundClip: "padding-box",
-                        borderImageSource: "linear-gradient(to right, #6a11cb, #2575fc)",
-                        borderImageSlice: 1,
-                    }}
+                    className="mt-2 block w-full px-4 py-2 border border-gradient-1 rounded-xl shadow-sm sm:text-sm bg-transparent focus:outline-none focus:border-2"
                 />
                 {form.formState.errors.email && (
                     <p className="text-red-500 text-sm mt-1">
@@ -80,9 +69,9 @@ export const LoginForm = () => {
             <div className="mb-4">
                 <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                 >
-                    Password
+                    Hasło
                 </label>
                 <input
                     {...form.register("password")}
@@ -90,39 +79,47 @@ export const LoginForm = () => {
                     placeholder="******"
                     type="password"
                     id="password"
-                    className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    style={{
-                        border: "2px solid transparent",
-                        backgroundClip: "padding-box",
-                        borderImageSource: "linear-gradient(to right, #6a11cb, #2575fc)",
-                        borderImageSlice: 1,
-                    }}
+                    className="mt-2 block w-full px-4 py-2 border border-gradient-1 rounded-xl shadow-sm sm:text-sm bg-transparent focus:outline-none focus:border-2"
                 />
                 {form.formState.errors.password && (
-                    <p className="text-red-500 text-sm mt-1">
+                    <p className="text-red-500 text-sm mt-2">
                         {form.formState.errors.password.message}
                     </p>
                 )}
             </div>
 
             {error && (
-                <div className="text-red-500 text-sm mb-4 bg-red-50 p-3 rounded">
+                <div className="text-red-500 text-sm mb-4 text-center rounded">
                     {error}
                 </div>
             )}
             {success && (
-                <div className="text-green-500 text-sm mb-4 bg-green-50 p-3 rounded">
+                <div className="text-green-500 text-sm mb-4 text-center rounded">
                     {success}
                 </div>
             )}
 
             <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm font-medium focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:outline-none"
+                className="w-full rounded-[3rem] p-[2px] bg-gradient-to-r from-gradient-2 to-gradient-1"
                 disabled={isPending}
             >
-                Login
+                <div className="p-2 bg-background rounded-[calc(3rem-2px)]">
+                    {isPending ? "Logowanie..." : "Zaloguj się"}
+                </div>
             </button>
+
+            <div className="text-center space-y-2">
+                <Link href="/register" className="block">
+                    Nie masz konta?
+                    <span className="font-semibold"> Zarejestruj się</span>
+                </Link>
+                <Link href="/reset-password" className="block">
+                    Zapomniałeś/aś hasła?
+                    <span className="font-semibold"> Zresetuj je</span>
+                </Link>
+            </div>
         </form>
+        </div>
     );
 };

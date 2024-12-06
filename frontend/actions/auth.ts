@@ -13,23 +13,21 @@ export const getUserInfo = async () => {
 };
 
 export const registerUser = async (
-    email: string,
-    username: string,
-    password: string
+    values: { email: string; username: string; password: string }
 ) => {
     try {
-        const body = {
-            email,
-            username,
-            password,
-        };
-        const response = await backendRequest('auth/register', 'POST', false, body);
-        return response.text();
+        const response = await backendRequest('auth/register', 'POST', false, values);
+        if (response.ok) {
+            await response.json();
+            return { success: "Rejestracja zakończona sukcesem", error: null };
+        }
+        return { success: null, error: "Nieprawidłowe dane rejestracyjne" };
     } catch (error) {
         console.error('Error registering user:', error);
-        throw error;
+        return { success: null, error: "Wystąpił błąd! Spróbuj ponownie później." };
     }
 };
+
 
 export const login = async (
     values: { email: string; password: string }
@@ -41,12 +39,12 @@ export const login = async (
             const cookieStore = await cookies();
             cookieStore.set('token', data.token);
             cookieStore.set('userInfo', JSON.stringify(data.userInfo));
-            return { error: null, success: "Login successful" };
+            return { error: null, success: "Zalogowano pomyślnie" };
         }
-        return { error: "Invalid credentials", success: null };
+        return { error: "Nieprawidłowe dane", success: null };
     } catch (error) {
         console.error('Error logging in:', error);
-        return { error: "Something went wrong!", success: null };
+        return { error: "Coś poszło nie tak!", success: null };
     }
 };
 
