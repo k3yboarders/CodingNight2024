@@ -4,9 +4,9 @@ import {
   Controller,
   Get,
   Post,
-  Query,
   Delete,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { NoteService } from './note.service';
 import { NoteDto } from './dto/note.dto';
@@ -25,8 +25,16 @@ export class NoteController {
   }
 
   @Get('/:id')
-  async getNote(@GetUser() user: JwtAuthDto, @Query('id') id: string) {
+  async getNote(@GetUser() user: JwtAuthDto, @Param('id') id: string) {
     return await this.noteService.getNote(id, user.userId);
+  }
+
+  @Get('/month/:date')
+  async getNotesByMonth(
+    @GetUser() user: JwtAuthDto,
+    @Param('date') date: Date,
+  ) {
+    return await this.noteService.getNotesByMonth(date);
   }
 
   @Post()
@@ -34,17 +42,17 @@ export class NoteController {
     await this.noteService.createNote(note, user.userId);
   }
 
-  @Put()
+  @Put('/:id')
   async updateNote(
     @Body() note: NoteDto,
     @GetUser() user: JwtAuthDto,
-    @Query('id') noteId: string,
+    @Param('id') noteId: string,
   ) {
     await this.noteService.updateNote(note, user.userId, noteId);
   }
 
-  @Delete()
-  async deleteNote(@Query('id') noteId: string) {
+  @Delete('/:id')
+  async deleteNote(@Param('id') noteId: string) {
     await this.noteService.deleteNote(noteId);
   }
 }

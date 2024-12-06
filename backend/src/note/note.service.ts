@@ -18,6 +18,17 @@ export class NoteService {
     });
   }
 
+  async getNotesByMonth(fullDate: Date): Promise<NoteDto[]> {
+    return await this.prisma.note.findMany({
+      where: {
+        day: {
+          gte: new Date(fullDate.getFullYear(), fullDate.getMonth(), 0),
+          lte: new Date(fullDate.getFullYear(), fullDate.getMonth() + 1, 0),
+        },
+      },
+    });
+  }
+
   async createNote(note: NoteDto, userId: string) {
     await this.prisma.note.create({
       data: Object.assign(note, { userId }),
