@@ -6,9 +6,10 @@ import { QuotesModule } from './quotes/quotes.module';
 import { ArticleModule } from './article/article.module';
 import { NoteModule } from './note/note.module';
 import { SettingsModule } from './settings/settings.module';
+import { ChallengeModule } from './challenge/challenge.module';
 
 @Module({
   controllers: [AppController],
-  imports: [AuthModule, DbModule, QuotesModule, ArticleModule, SettingsModule, NoteModule],
+  imports: [AuthModule, DbModule, QuotesModule, ArticleModule, SettingsModule, NoteModule, ChallengeModule],
 })
 export class AppModule {}
