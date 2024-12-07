@@ -29,7 +29,7 @@ export class ArticleController {
 
   @Get('categories')
   async getArticleCategories() {
-    return this.articleService.getArticleCategories;
+    return this.articleService.getArticleCategories();
   }
 
   @UseGuards(PsychologistGuard)

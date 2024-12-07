@@ -1,0 +1,47 @@
+export const articles = [
+    {
+        title: 'The Benefits of Morning Exercise',
+        content: 'Regular morning exercise can boost your energy levels and set a positive tone for the day.',
+        authorId: '11a3da03-5b3a-452e-a157-515f68098e59',
+        categoryId: 'article-category-1',
+        tags: ['fitness', 'morning routine'],
+        createdAt: '2022-01-01T12:00:00.000Z',
+        updatedAt: '2022-01-01T12:00:00.000Z',
+      },
+      {
+        title: 'The Importance of Mental Health',
+        content: 'Taking care of your mental health is crucial for your overall well-being.',
+        authorId: '11a3da03-5b3a-452e-a157-515f68098e59',
+        categoryId: 'article-category-1',
+        tags: ['mental health', 'self-care'],
+        createdAt: '2022-01-05T12:00:00.000Z',
+        updatedAt: '2022-01-05T12:00:00.000Z',
+      },
+      {
+        title: 'The Benefits of Meditation',
+        content: 'Regular meditation can reduce stress and improve your overall mental well-being.',
+        authorId: '11a3da03-5b3a-452e-a157-515f68098e59',
+        categoryId: 'article-category-1',
+        tags: ['meditation', 'mindfulness'],
+        createdAt: '2022-01-15T12:00:00.000Z',
+        updatedAt: '2022-01-15T12:00:00.000Z',
+      },
+      {
+        title: 'The Importance of Self-Care',
+        content: 'Taking care of your physical and mental health is crucial for your overall well-being.',
+        authorId: '11a3da03-5b3a-452e-a157-515f68098e59',
+        categoryId: 'article-category-1',
+        tags: ['self-care', 'mental health'],
+        createdAt: '2022-01-25T12:00:00.000Z',
+        updatedAt: '2022-01-25T12:00:00.000Z',
+      },
+      {
+        title: 'How to Improve Your Writing Skills',
+        content: 'Tips and tricks to help you improve your writing skills and become a better writer.',
+        authorId: '11a3da03-5b3a-452e-a157-515f68098e59',
+        categoryId: 'article-category-2',
+        tags: ['writing', 'productivity'],
+        createdAt: '2022-02-01T12:00:00.000Z',
+        updatedAt: '2022-02-01T12:00:00.000Z',
+      }
+]
