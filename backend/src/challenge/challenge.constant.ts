@@ -1,0 +1,1 @@
+export const CHALLENGE_BASED_ON_HISTORY_PROMPT = `In json array below is history of my emotions and experiences. Based on all generate short challange and suggest number of points I will get when I finish it. I must be able to finish it in one hour. It should be concrete. Don't give example reward for completing task. Answer in grammar-proper polish.`

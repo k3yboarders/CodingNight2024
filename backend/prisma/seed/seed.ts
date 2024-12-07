@@ -1,9 +1,15 @@
+import { notes } from './notes';
 import { quotes } from './quotes';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export async function seedDb() {
+    console.log(notes);
+  await prisma.note.deleteMany();
+  await  prisma.note.createMany({
+    data: notes,
+  });
     console.log(quotes);
   await prisma.quote.deleteMany();
   await  prisma.quote.createMany({
