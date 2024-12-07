@@ -36,11 +36,12 @@ export class NoteService {
     });
   }
 
-  async createNote(note: NoteDto, userId: string) {
-    console.log(note);
-    await this.prisma.note.create({
-      data: Object.assign(note, { userId }),
-    });
+  async createNote(note: NoteDto, userId: string): Promise<string> {
+    return (
+      await this.prisma.note.create({
+        data: Object.assign(note, { userId }),
+      })
+    ).id;
   }
   async updateNote(note: NoteDto, userId: string, noteId: string) {
     console.log(note);
@@ -60,6 +61,22 @@ export class NoteService {
   }
   async getSuggestions(userId: string) {
     const notes = await this.getAllUsersNotes(userId);
+    return this.gemini.generateTextWithData(
+      SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
+      notes,
+    );
+  }
+
+  async getSuggestionForNote(noteId: string, userId: string) {
+    const note = await this.getNote(noteId, userId);
+    return this.gemini.generateTextWithData(
+      SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
+      note,
+    );
+  }
+
+  async getSuggestionsForMonth(userId: string, date: Date) {
+    const notes = await this.getNotesByMonth(date, userId);
     return this.gemini.generateTextWithData(
       SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
       notes,

@@ -1,44 +1,59 @@
-"use client";;
+"use client";
+import { SparklesIcon } from "@heroicons/react/24/solid";
+
+;
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import BarChart from "./bar-chart";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
-import { getSleepAnalysis, getSleepRecords } from "@/actions/sleep-tracker";
+import { getSleepAnalysis, getSleepRecords,  } from "@/actions/sleep-tracker";
 import { SleepAnalysis } from "@/types";
 
 const PageContent = () => {
     const labels = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
 
+    const getFirstDayOfWeek = (date: Date) => {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+        date.setDate(diff);
+        date.setHours(0, 0, 0, 0);
+        return date;
+    }
+
+    const getLastDayOfWeek = (date: Date) => {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? 0 : 6);
+        date.setDate(diff);
+        date.setHours(0,0,0,0);
+        return date;
+    }
+
     const [records, setRecords] = useState([]);
     const [data, setData] = useState([]);
-    const [from, setFrom] = useState(new Date());
-    const [to, setTo] = useState(new Date());
+    const [from, setFrom] = useState(getFirstDayOfWeek(new Date()));
+    const [to, setTo] = useState(getLastDayOfWeek(new Date()));
     const [analysis, setAnalysis] = useState<SleepAnalysis | null>(null);
+    
 
-    const fetchRecords = useCallback(async (romDate: Date, toDate: Date) => {
+
+    const fetchRecords = useCallback(async (fromDate: Date, toDate: Date) => {
         try {
             const response = await getSleepRecords();
-            console.log(response);
-            const filtered = response.filter((record) => {
-                const recordDateTo = new Date(record.to);
-                return recordDateTo >= from && recordDateTo <= to;
-            });
-            const data1 = [];
-            for (let i = 0; i < 7; i++) {
-                const existingRecord = filtered.find((record) => {
-                    const recordDate = new Date(record.to);
-                    return recordDate.getDay() === i;
-                });
-                console.log(i, existingRecord);
-                if (existingRecord) {
-                    const difference = new Date(existingRecord.to).getTime() - new Date(existingRecord.from).getTime();
-                    data1.push((difference / 1000 / 60 / 60).toFixed(2));
-                } else {
-                    data1.push(0);
-                }
-            }
-            console.log(data1);
+            const filtered = response.filter((record: { from: Date; to: Date; comment: string; }) => {
+                const recordDate = new Date(record.to);
+                return recordDate >= fromDate && recordDate <= toDate;
+            })
+            const data1 = Array(7).fill(0);
+            filtered.forEach((record: { from: Date; to: Date; comment: string; }) => {
+                const dateTo = new Date(record.to);
+                const dateFrom = new Date(record.from);
+
+                const diff = dateTo.getTime() - dateFrom.getTime();
+                console.log(dateTo.toISOString(), diff);
+                const index = (dateTo.getUTCDay() == 0)? 6: dateTo.getUTCDay() - 1;
+               data1[index] = (diff / 1000 / 60 / 60).toFixed(2);
+            })
             setData(data1);
 
             setRecords(filtered);
@@ -136,7 +151,7 @@ const PageContent = () => {
                 </Link>
             </motion.div>
             <motion.div
-                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full mt-5 gap-2"
+                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full mt-8 gap-2"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -146,8 +161,10 @@ const PageContent = () => {
                     {analysis?.generatedAnalysis}
                 </p>
                 {!analysis && (
-                    <button className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2" onClick={() => fetchAnalysis(true)}>
-                        Wygeneruj analizę snu
+                    <button className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2 flex" onClick={() => fetchAnalysis(true)}>
+                        <SparklesIcon className="size-6 text-yellow-500" />
+                       <p>Wygeneruj analizę snu</p>
+                        <SparklesIcon className="size-6 text-yellow-500" />
                     </button>
                 )}
 

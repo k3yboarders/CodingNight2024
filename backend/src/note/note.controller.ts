@@ -24,6 +24,22 @@ export class NoteController {
     return await this.noteService.getSuggestions(user.userId);
   }
 
+  @Get('/suggestion/:id')
+  async getSuggestionsById(
+    @GetUser() user: JwtAuthDto,
+    @Param('id') id: string,
+  ) {
+    return await this.noteService.getSuggestionForNote(id, user.userId);
+  }
+
+  @Get('/suggestion/month/:date')
+  async getSuggestionsByMonth(
+    @GetUser() user: JwtAuthDto,
+    @Param('date') date: Date,
+  ) {
+    return await this.noteService.getSuggestionsForMonth(user.userId, date);
+  }
+
   @Get('streak')
   async getStreak(@GetUser() user: JwtAuthDto) {
     return await this.noteService.getLatestStreak(user.userId);
