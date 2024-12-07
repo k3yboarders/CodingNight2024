@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class SettingsDto {
   @IsString()
@@ -9,4 +15,8 @@ export class SettingsDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsNumber()
+  @IsOptional()
+  expectedSleepTime: number;
 }

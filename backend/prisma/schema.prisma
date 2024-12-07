@@ -15,6 +15,7 @@ model User {
   role                Role                 @default(CHILD)
   fullName            String?
   avatar              Bytes?
+  expectedSleepTime   Int?
   articles            Article[]
   bookmarkedArticles  BookmarkedArticle[]
   challenges          Challenge[]

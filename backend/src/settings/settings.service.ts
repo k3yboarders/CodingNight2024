@@ -11,6 +11,7 @@ export class SettingsService {
       data: {
         username: settings.username,
         email: settings.email,
+        expectedSleepTime: settings.expectedSleepTime,
       },
     });
   }
@@ -31,6 +32,7 @@ export class SettingsService {
       select: {
         username: true,
         email: true,
+        expectedSleepTime: true,
       },
     });
   }
