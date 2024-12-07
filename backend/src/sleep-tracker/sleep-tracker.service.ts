@@ -63,4 +63,28 @@ export class SleepTrackerService {
       },
     });
   }
+
+  async getSleepDataByDay(userId: string, day: Date) {
+    const sleepRecord = await this.prisma.sleepRecord.findFirst({
+      where: {
+        userId,
+        to: {
+          gte: day,
+        },
+      },
+      include: {
+        user: {
+          select: {
+            expectedSleepTime: true,
+          },
+        },
+      },
+    });
+    return {
+      ...sleepRecord,
+      hours:
+        new Date(sleepRecord.to).getHours() -
+        new Date(sleepRecord.from).getHours(),
+    };
+  }
 }
