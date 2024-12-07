@@ -31,7 +31,7 @@ export class ChallengeService {
       where: { userId },
       take: limit
     });
-    const rawChallenge = await this.gemini.generateTextWithNotes(CHALLENGE_BASED_ON_HISTORY_PROMPT, notes);
+    const rawChallenge = await this.gemini.generateTextWithData(CHALLENGE_BASED_ON_HISTORY_PROMPT, notes, 'content');
     const newChallenge = JSON.parse(rawChallenge);
     await this.prisma.challenge.create({
       data: {

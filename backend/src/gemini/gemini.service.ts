@@ -19,21 +19,21 @@ export class GeminiService {
     return text;
   }
 
-  notesToArray(notes: { content: string }[]) {
-    return notes.map((note) => note.content);
+  objectsToArray(objects, key: string) {
+    return objects.map(objects => objects[key]);
   }
 
-  mergePromptWithData(prompt: string, data: string[]) {
-    return prompt + JSON.stringify(data);
+  mergePromptWithData(prompt: string, data){
+    return prompt + JSON.stringify(data)
   }
 
-  async generateTextWithNotes(
-    prompt: string,
-    noteObjects: { content: string }[],
-  ) {
-    const notes = this.notesToArray(noteObjects);
-    const processedPrompt = this.mergePromptWithData(prompt, notes);
-    if (!notes.length) {
+  async generateTextWithData(prompt: string, rawObjects, key?: string) {
+    let objects = rawObjects;
+    if(key) {
+      objects = this.objectsToArray(rawObjects, key);
+    }
+    const processedPrompt = this.mergePromptWithData(prompt, objects);
+    if (!objects.length) {
       throw new HttpException('No notes found', HttpStatus.NOT_FOUND);
     }
     return this.generateText(processedPrompt);

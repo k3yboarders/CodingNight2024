@@ -6,7 +6,7 @@ import { GEMINI_MODEL } from './gemini.constant';
 
 
 @Injectable()
-export class GeminiNoteProvider {
+export class GeminiPlainProvider {
   constructor() {}
 
   provide(): GeminiService {
@@ -18,10 +18,10 @@ export class GeminiNoteProvider {
   }
 }
 
-export const geminiNoteProvider: Provider = {
+export const geminiPlainProvider: Provider = {
   provide: GeminiService,
   useFactory: () => {
-    const geminiNoteProvider = new GeminiNoteProvider();
+    const geminiNoteProvider = new GeminiPlainProvider();
     return geminiNoteProvider.provide();
   },
 };

@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { SleepRecordDto } from './dto/sleep-record.dto';
+import { GeminiService } from 'src/gemini/gemini.service';
+import { SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT } from './sleep-tracker.constant';
 
 @Injectable()
 export class SleepTrackerService {
-  constructor(private readonly prisma: DbService) {}
+  private readonly logger = new Logger(SleepTrackerService.name);
+  constructor(private readonly prisma: DbService, private readonly gemini: GeminiService) {}
 
   async addSleepRecord(data: SleepRecordDto, userId: string) {
     return this.prisma.sleepRecord.create({
@@ -42,6 +45,7 @@ export class SleepTrackerService {
     });
   }
 
+
   async getSleepAnalysis(from: Date, to: Date, userId: string) {
     const analysisFromDb = await this.prisma.sleepAnalysis.findMany({
       where: {
@@ -50,8 +54,29 @@ export class SleepTrackerService {
         to: to,
       },
     });
-    if (!analysisFromDb) {
-      //TODO: generate analysis
+    if (!analysisFromDb.length) {
+      const sleepRecords = await this.getSleepRecords(userId);
+      const sleepRecordsWithoutTrash = sleepRecords.map((record) => {
+        return {
+          from: new Date(record.from),
+          to: new Date(record.to),
+        };
+      })
+      if (!from && sleepRecordsWithoutTrash[0]) {
+        from = sleepRecordsWithoutTrash[0].from;
+      }
+      if (!to && sleepRecordsWithoutTrash[sleepRecordsWithoutTrash.length - 1]) {
+        to = sleepRecordsWithoutTrash[sleepRecordsWithoutTrash.length - 1].to;
+      }
+      const analysis = await this.gemini.generateTextWithData(SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT, sleepRecordsWithoutTrash);
+      return await this.prisma.sleepAnalysis.create({
+        data: {
+          userId,
+          from,
+          to,
+          generatedAnalysis: analysis,
+        },
+      })
     }
     return analysisFromDb;
   }
