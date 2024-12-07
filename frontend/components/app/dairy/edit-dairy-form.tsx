@@ -7,6 +7,7 @@ import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { DairySchema } from "@/schemas/dairy";
 import { updateNote } from "@/actions/notes";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof DairySchema>, id: string }) => {
     const {
@@ -21,7 +22,7 @@ export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof
     const router = useRouter();
 
     const onSubmit = (data: z.infer<typeof DairySchema>) => {
-        console.log(data,   id);
+        console.log(data, id);
         updateNote(
             data,
             id
@@ -30,9 +31,20 @@ export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof
         });
     };
 
+    const variants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
+        <motion.form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.2 }}
+        >
+            <motion.div variants={variants}>
                 <input
                     {...register("title")}
                     className="w-full bg-gray-400/5 p-4 rounded-xl focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
@@ -41,9 +53,9 @@ export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof
                 {errors.title && (
                     <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
                 )}
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={variants}>
                 <textarea
                     {...register("content")}
                     className="w-full bg-gray-400/5 p-4 rounded-xl resize-none focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
@@ -53,15 +65,17 @@ export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof
                 {errors.content && (
                     <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
                 )}
-            </div>
+            </motion.div>
 
-            <button
+            <motion.button
                 type="submit"
                 className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
             >
                 <DocumentCheckIcon className="w-6 h-6" />
                 <span className="font-semibold">Zapisz zmiany</span>
-            </button>
-        </form>
+            </motion.button>
+        </motion.form>
     );
 };
