@@ -3,7 +3,7 @@
 import { ArrowLeftIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { getNotesByMonth } from "@/actions/notes";
+import { getNote, getNotesByMonth } from "@/actions/notes";
 
 const DairyPage = () => {
     const currentDate = new Date();
@@ -55,19 +55,20 @@ const DairyPage = () => {
             <div className="space-y-4">
                 {notes.length > 0 ? (
                     notes.map((note: {
+                        id: string;
                         title: string;
                         day: Date;
                     }, index) => (
-                        <div key={index} className="flex bg-gray-200/15 rounded-lg">
+                        <Link href={`/app/dairy/${note.id}`} key={index} className="flex bg-gray-200/15 rounded-lg cursor-pointer" >
                             <div className="flex flex-col items-center justify-center bg-gradient-1/70 py-2 px-4 rounded-l-lg">
                                 <p className="font-bold text-lg">{new Date(note.day).getDate()}</p>
                                 <p className="uppercase">{new Date(note.day).toLocaleString('pl-PL', { weekday: 'short' })}</p>
                             </div>
                             <div className="p-3">{note.title}</div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
-                    <p className="text-center text-white/70">Brak notatek na ten miesiąc.</p>
+                    <p className="text-center text-white/70">Brak wpisów na ten miesiąc.</p>
                 )}
             </div>
         </div>

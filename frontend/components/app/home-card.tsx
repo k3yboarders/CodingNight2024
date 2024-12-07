@@ -13,7 +13,7 @@ type HomeCardProps = {
 export const HomeCard: React.FC<HomeCardProps> = ({ children, title, icon, endItem }) => {
     return (
         <motion.div
-            className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full"
+            className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full space-y-3"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}

@@ -25,7 +25,7 @@ const SleepDataComponent = ({ sleepData }: { sleepData: SleepData }) => {
     } else {
         return (
             <>
-                <Link className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80" href="/app/sleep-tracker/add">Opisz swój dzisiejszy sen!</Link>
+                <Link className="bg-gradient-1/70 text-center text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80" href="/app/sleep-tracker/add">Opisz swój dzisiejszy sen!</Link>
             </>
         );
     };

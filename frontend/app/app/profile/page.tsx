@@ -1,26 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { changeEmailSchema, changeNameSchema, changePasswordSchema, changeSleepHoursSchema } from "@/schemas/profile";
+import { changePassword, getUserInfo } from "@/actions/auth";
+import { updateSettings } from "@/actions/settings";
 
 const ProfilePage = () => {
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [sleepHours, setSleepHours] = useState(0)
+
+    useEffect(() => {
+        getUserInfo().then((data) => {
+            setUsername(data.username)
+            setEmail(data.email)
+            setSleepHours(+data.sleepHours)
+        })
+    }, []);
+
+    useEffect(() => {
+        updateSettings({ username, email, expectedSleepTime: sleepHours })
+    }, [username, email, sleepHours]);
+
     const nameForm = useForm({ resolver: zodResolver(changeNameSchema) });
     const sleepForm = useForm({ resolver: zodResolver(changeSleepHoursSchema) });
     const passwordForm = useForm({ resolver: zodResolver(changePasswordSchema) });
     const emailForm = useForm({ resolver: zodResolver(changeEmailSchema) });
 
-    const handleNameSubmit = (data) => console.log('Zmieniono nazwę użytkownika:', data);
-    const handleSleepSubmit = (data) => console.log('Zmieniono liczbę godzin snu:', data);
-    const handlePasswordSubmit = (data) => console.log('Zmieniono hasło:', data);
+    const handleNameSubmit = (data) => setUsername(data.username);
+    const handleSleepSubmit = (data) => setSleepHours(+data.sleepHours);
+    const handlePasswordSubmit = (data) => changePassword(data.oldPassword, data.newPassword);
     const handleEmailSubmit = (data) => console.log('Zmieniono email:', data);
+
 
     return (
         <div className="w-full space-y-10 mb-24">
             <h1 className="text-center text-3xl">Twój profil</h1>
-            <h2 className="text-center">
-                <span className="font-semibold">Witaj,</span> username
+            <h2 className="text-center text-2xl">
+                <span className="font-semibold">Witaj,</span> {username}
             </h2>
 
             <form onSubmit={nameForm.handleSubmit(handleNameSubmit)} className="space-y-4">
@@ -37,7 +56,7 @@ const ProfilePage = () => {
             </form>
 
             <form onSubmit={sleepForm.handleSubmit(handleSleepSubmit)} className="space-y-4">
-                <h2 className="text-center font-semibold">Zmień liczbę godzin snu</h2>
+                <h2 className="text-center font-semibold">Zmień preferowaną liczbę godzin snu</h2>
                 <input
                     type="number"
                     {...sleepForm.register('sleepHours')}

@@ -44,7 +44,7 @@ export class NoteController {
     @GetUser() user: JwtAuthDto,
     @Param('date') date: Date,
   ) {
-    return await this.noteService.getNotesByMonth(date);
+    return await this.noteService.getNotesByMonth(date, user.userId);
   }
 
   @Post()

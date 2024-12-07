@@ -2,6 +2,7 @@ import { HomeCard } from "@/components/app/home-card";
 import { Quote, SleepData } from "@/types";
 import { BookOpenIcon, FireIcon, MoonIcon, StarIcon } from "@heroicons/react/24/outline";
 import SleepDataComponent from "./sleep-data";
+import Link from "next/link";
 
 const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepData: SleepData, diaryStreak: number }) => {
     return (
@@ -36,7 +37,7 @@ const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepDat
                     {diaryStreak > 0 && (
                         <p className="text-white/90">Już od {diaryStreak} dni konsekwentnie prowadzisz swój pamietnik.</p>
                     )}
-                    <button className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80">Opisz swój dzień!</button>
+                    <Link href="/app/dairy/new" className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80 text-center">Opisz swój dzień!</Link>
                 </div>
             </HomeCard>
             <HomeCard title="Wyzwanie dnia" icon={<StarIcon className="size-6" />} endItem={
@@ -45,7 +46,7 @@ const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepDat
                     <p className=" text-white/90">9 dni</p>
                 </div>
             }>
-                <div className="flex flex-col gap-2 items-center mb-2">
+                <div className="flex flex-col gap-8 items-center mb-2">
                     <p className="text-white/90">Już od 9 dni konsekwentnie bierzesz udział w dziennych wyzwaniach.</p>
                     <button className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80">Weź udział!</button>
                 </div>

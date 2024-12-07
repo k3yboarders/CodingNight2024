@@ -8,11 +8,11 @@ interface Settings {
     expectedSleepTime: number;
 }
 
-export const updateSettings = (settings: Settings) => 
+export const updateSettings = async (settings: Settings) =>
     makeRequest('user/settings', 'PUT', true, 'Błąd w trakcie aktualizacji ustawień', 
         'Pomyślnie zaktualizowano ustawienia',
         settings
     );
 
-export const getSettings = () => 
+export const getSettings = async () =>
     makeRequest('user/settings', 'GET', true, 'Błąd w trakcie pobierania ustawień');

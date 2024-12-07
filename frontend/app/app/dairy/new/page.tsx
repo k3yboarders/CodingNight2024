@@ -14,7 +14,7 @@ const DairyNew = () => {
     }).format(new Date());
 
     return (
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-6 mb-24">
             <div className="relative w-full">
                 <AlertDialogComponent title="Wyjście" content="Czy jesteś wyjść bez zapisywania?" cancelText="Wróć do wpisu" confirmText="Wyjdź" onConfirm={() => redirect("/app/dairy")} >
                     <ArrowLeftIcon className="absolute left-1 top-1/2 transform -translate-y-1/2 size-9 cursor-pointer hover:bg-gradient-1 rounded-full p-1" />
