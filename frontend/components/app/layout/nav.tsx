@@ -9,7 +9,7 @@ const navItems = [
     { href: "/app/sleep-tracker", Icon: MoonIcon },
     { href: "/", Icon: StarIcon },
     { href: "/app/articles", Icon: NewspaperIcon },
-    { href: "/", Icon: UserCircleIcon },
+    { href: "/app/profile", Icon: UserCircleIcon },
 ]
 
 export const Nav = () => {
