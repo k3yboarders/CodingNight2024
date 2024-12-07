@@ -17,8 +17,8 @@ const DairyPage = () => {
                 <ArrowRightIcon className="size-8 cursor-pointer" />
             </div>
 
-            <div className="flex bg-gray-400/10 rounded-lg">
-                <div className="flex flex-col items-center justify-center bg-gray-400/15 py-2 px-4 rounded-l-lg">
+            <div className="flex bg-gray-200/15 rounded-lg">
+                <div className="flex flex-col items-center justify-center bg-gradient-1/70 py-2 px-4 rounded-l-lg">
                     <p className="font-bold text-lg">30</p>
                     <p>PON</p>
                 </div>
