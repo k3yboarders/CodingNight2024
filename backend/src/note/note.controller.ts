@@ -52,13 +52,13 @@ export class NoteController {
     await this.noteService.createNote(note, user.userId);
   }
 
-  @Put('/:id')
+  @Put(':id')
   async updateNote(
     @Body() note: NoteDto,
     @GetUser() user: JwtAuthDto,
-    @Param('id') noteId: string,
+    @Param('id') id: string,
   ) {
-    await this.noteService.updateNote(note, user.userId, noteId);
+    await this.noteService.updateNote(note, user.userId, id);
   }
 
   @Delete('/:id')

@@ -48,7 +48,9 @@ const PageContent = ({ quote, sleepData, diaryStreak, dailyChallengeStreak }: { 
             }>
                 <div className="flex flex-col gap-2 items-center mb-2">
                     <p className="text-white/90">Już od {dailyChallengeStreak} dni konsekwentnie bierzesz udział w dziennych wyzwaniach.</p>
-                    <button className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80">Weź udział!</button>
+                    <Link
+                        href="/app/daily-challenge"
+                        className="bg-gradient-1/70 text-center text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80">Weź udział!</Link>
                 </div>
             </HomeCard>
         </div>

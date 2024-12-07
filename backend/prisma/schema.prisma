@@ -135,11 +135,6 @@ model SleepAnalysis {
 
 }
 
-model Chat {
-  id  String @id @default(uuid())
-  messages Message[]
-}
-
 model Message {
   id  String @id @default(uuid())
   content String
@@ -148,8 +143,6 @@ model Message {
   receiverId String
   sender User @relation("sender", fields: [senderId], references: [id])
   receiver User @relation("receiver", fields: [receiverId], references: [id])
-  chatId String
-  chat Chat @relation(fields: [chatId], references: [id])
 }
 
 enum Role {

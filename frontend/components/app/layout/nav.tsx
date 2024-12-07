@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpenIcon, HomeIcon, NewspaperIcon, StarIcon, UserCircleIcon, MoonIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, HomeIcon, NewspaperIcon, StarIcon, UserCircleIcon, MoonIcon, ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import { NavItem } from "@/components/app/layout/nav-item";
 
 const navItems = [
@@ -9,6 +9,7 @@ const navItems = [
     { href: "/app/sleep-tracker", Icon: MoonIcon },
     { href: "/app/daily-challenge", Icon: StarIcon },
     { href: "/app/articles", Icon: NewspaperIcon },
+    { href: "/app/chat", Icon: ChatBubbleLeftIcon },
     { href: "/app/profile", Icon: UserCircleIcon },
 ]
 

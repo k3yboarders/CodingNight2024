@@ -49,6 +49,7 @@ export const makeRequest = async (
           return await response.json();
         case "DELETE":
         case "PUT":
+          console.log(await response.json());
         case "POST":
           await response.json();
           return { error: null, success: successMsg };

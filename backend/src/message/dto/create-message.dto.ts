@@ -1,11 +1,10 @@
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class MessageDto {
+export class CreateMessageDto {
   @IsString()
   @IsNotEmpty()
-  message: string;
+  content: string;
+
   @IsUUID()
   receiverId: string;
-  @IsUUID()
-  chatId: string;
 }

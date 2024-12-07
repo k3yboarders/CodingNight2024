@@ -21,7 +21,7 @@ export const EditDairyForm = ({ initialData, id }: { initialData: z.infer<typeof
     const router = useRouter();
 
     const onSubmit = (data: z.infer<typeof DairySchema>) => {
-        console.log(data);
+        console.log(data,   id);
         updateNote(
             data,
             id
