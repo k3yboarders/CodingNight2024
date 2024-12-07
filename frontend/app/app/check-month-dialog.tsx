@@ -4,10 +4,11 @@ import animationData from '@/public/ai-generating.json';
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { LottieAnimation } from "@/components/lottie-animation";
+import { getSuggestionsByMonth } from "@/actions/notes";
 
 export const CheckMonthDialog = ({ date, children }: { date: Date; children: React.ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [data, setData] = useState<{ rating: number; description: string } | null>(null);
+    const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -18,9 +19,10 @@ export const CheckMonthDialog = ({ date, children }: { date: Date; children: Rea
 
         (async () => {
             setIsLoading(true);
-            // const { data } = await partnershipCompatibility(id);
-            // setData(data ?? null);
-            // setIsLoading(false);
+            const output = await getSuggestionsByMonth(date);
+            console.log(output);
+            setData(output ?? null);
+            setIsLoading(false);
         })();
     }, [isOpen, date]);
 
@@ -44,7 +46,7 @@ export const CheckMonthDialog = ({ date, children }: { date: Date; children: Rea
                         </div>
                     ) : (
                         <>
-                            <p className="text-justify">{data?.description}</p>
+                            <p className="text-justify">{data}</p>
                             <div className="flex justify-between items-center w-full">
                                 <div className="flex flex-col space-y-1">
                                     <p className="text-sm font-light">
