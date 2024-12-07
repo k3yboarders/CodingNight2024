@@ -1,3 +1,4 @@
+'use server'
 import { makeRequest } from "./backend";
 
 export const getAllUsersChallenges = async () => 
