@@ -1,27 +1,5 @@
 'use server'
-import { backendRequest } from './backend';
-
-const makeRequest = async (path: string, method: string,
-     useAuth: boolean, errorMsg: string, successMsg?: string, body?: unknown) => {
-    try {
-        const response = await backendRequest(path, method, useAuth, body);
-        if (response.ok) {
-            switch(method) {
-                case 'GET':
-                    return await response.json();
-                case 'DELETE':
-                case 'PUT':
-                case 'POST':
-                    await response.json();
-                    return {error: null, success: successMsg};
-            }
-        }
-        return {error: errorMsg, success: null};
-    }
-    catch {
-        return {error: errorMsg, success: null};
-    }
-}
+import { makeRequest } from './backend';
 
 export const getAllNotes = 
     async () => makeRequest('note', 'GET', true, 'Błąd w trakcie pobierania notatek');
