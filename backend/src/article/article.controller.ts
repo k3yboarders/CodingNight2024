@@ -20,7 +20,7 @@ import { GeminiService } from 'src/gemini/gemini.service';
 @UseGuards(AuthGuard('jwt'))
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService, private readonly gemini: GeminiService) {}
+  constructor(private readonly articleService: ArticleService) {}
 
   @Get()
   async getArticles(@Query('categoryId') categoryId: string) {
@@ -30,6 +30,11 @@ export class ArticleController {
   @Get('categories')
   async getArticleCategories() {
     return this.articleService.getArticleCategories();
+  }
+
+  @Get(':id')
+  async getArticle(@Param('id') id: string) {
+    return this.articleService.getArticleById(id);
   }
 
   @UseGuards(PsychologistGuard)

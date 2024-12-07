@@ -2,6 +2,23 @@
 
 import { backendRequest } from "./backend";
 
+export const getArticle = async (
+    articleId: string
+) => {
+    try {
+        const path = articleId ? `article/${articleId}` : 'article'; 
+        const response = await backendRequest(path, 'GET', true);
+        if (response.ok) {
+            const data = await response.json();
+            return { error: null, data, success: "Pomyślnie pobrano artykuł" };
+        }
+        return { error: "Wystąpił błąd", success: null };
+    } catch (error) {
+        console.error('Error logging in:', error);
+        return { error: "Coś poszło nie tak!", success: null };
+    }
+};
+
 export const getArticles = async (
     values: { categoryId: string }
 ) => {
