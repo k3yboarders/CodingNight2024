@@ -47,11 +47,11 @@ export const RegisterForm = () => {
     };
 
     return (
-        <motion.div 
+        <motion.div
             className="rounded-[3rem] max-w-md p-[2px]"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{opacity: 0, y: 50}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.5}}
         >
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -125,21 +125,21 @@ export const RegisterForm = () => {
                 </div>
 
                 {error && (
-                    <motion.div 
+                    <motion.div
                         className="text-red-500 text-sm mb-4 text-center rounded"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{duration: 0.3}}
                     >
                         {error}
                     </motion.div>
                 )}
                 {success && (
-                    <motion.div 
+                    <motion.div
                         className="text-green-500 text-sm mb-4 text-center rounded"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{duration: 0.3}}
                     >
                         {success}
                     </motion.div>
@@ -150,17 +150,13 @@ export const RegisterForm = () => {
                     className="w-full rounded-[3rem] p-[2px] bg-gradient-to-r from-gradient-2 to-gradient-1"
                     disabled={isPending}
                 >
-                    <motion.div 
-                        className="p-2 bg-background rounded-[calc(3rem-2px)]"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
+                    <div className="p-2 bg-background rounded-[calc(3rem-2px)]">
                         {isPending ? "Rejestracja..." : "Zarejestruj się"}
-                    </motion.div>
+                    </div>
                 </button>
 
-                <motion.div 
-                    className="text-center"
+    <motion.div
+        className="text-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}

@@ -32,14 +32,14 @@ export const Hero = ({ quote }: { quote: Quote }) => {
                 </span>
             </motion.h1>
             <motion.p
-                className="text-base md:text-lg lg:text-xl mt-6 md:mt-8 max-w-md md:max-w-2xl"
+                className="text-lg lg:text-xl mt-6 md:mt-8 max-w-md md:max-w-2xl"
                 variants={fadeIn}
             >
                 Przekształć codzienne refleksje w siłę napędową swojego rozwoju.
                 GrowCalmly automatycznie śledzi Twoje emocje, organizuje je i dostarcza spersonalizowane wskazówki, pomagając Ci budować pozytywne nawyki i osiągnąć harmonię mentalną.
             </motion.p>
             <motion.div
-                className="mt-6 md:mt-8 flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-6"
+                className="mt-8 md:mt-10 flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-6"
                 variants={fadeIn}
             >
                 <GradientLink href="/app">
@@ -50,7 +50,7 @@ export const Hero = ({ quote }: { quote: Quote }) => {
                 </GradientLink>
             </motion.div>
             <motion.div
-                className="mt-6 md:mt-8 text-sm md:text-lg lg:text-xl"
+                className="mt-8 md:mt-10 text-md md:text-lg lg:text-xl text-gray-400"
                 variants={fadeIn}
             >
                 <p className="italic">&quot;{quote.content}&quot;</p>

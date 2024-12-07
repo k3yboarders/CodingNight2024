@@ -17,11 +17,11 @@ const PageContent = ({ streak, dailyChallenge }: any) => {
     return (
         <div className="w-full flex flex-col items-center justify-center gap-4">
             <motion.div className="flex flex-col items-center gap-2" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
-                <FireIcon className="size-32 text-orange-500" />
+                <FireIcon className="size-24 text-orange-500" />
                 <h2 className="text-4xl font-bold text-white/90">{streak}</h2>
             </motion.div>
             <motion.div
-                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full"
+                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full mt-6"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}

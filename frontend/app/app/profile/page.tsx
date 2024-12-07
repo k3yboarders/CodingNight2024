@@ -4,36 +4,43 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { changeEmailSchema, changeNameSchema, changePasswordSchema, changeSleepHoursSchema } from "@/schemas/profile";
-import { changePassword, getUserInfo } from "@/actions/auth";
+import { changePassword, getUserInfo, logout } from "@/actions/auth";
 import { updateSettings } from "@/actions/settings";
+import { redirect } from "next/navigation";
+
+import type { z } from "zod";
+
+type ChangeNameFormData = z.infer<typeof changeNameSchema>;
+type ChangeSleepHoursFormData = z.infer<typeof changeSleepHoursSchema>;
+type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
+type ChangeEmailFormData = z.infer<typeof changeEmailSchema>;
 
 const ProfilePage = () => {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [sleepHours, setSleepHours] = useState(0)
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [sleepHours, setSleepHours] = useState(0);
 
     useEffect(() => {
         getUserInfo().then((data) => {
-            setUsername(data.username)
-            setEmail(data.email)
-            setSleepHours(+data.sleepHours)
-        })
+            setUsername(data.username);
+            setEmail(data.email);
+            setSleepHours(+data.sleepHours);
+        });
     }, []);
 
     useEffect(() => {
-        updateSettings({ username, email, expectedSleepTime: sleepHours })
+        updateSettings({ username, email, expectedSleepTime: sleepHours });
     }, [username, email, sleepHours]);
 
-    const nameForm = useForm({ resolver: zodResolver(changeNameSchema) });
-    const sleepForm = useForm({ resolver: zodResolver(changeSleepHoursSchema) });
-    const passwordForm = useForm({ resolver: zodResolver(changePasswordSchema) });
-    const emailForm = useForm({ resolver: zodResolver(changeEmailSchema) });
+    const nameForm = useForm<ChangeNameFormData>({ resolver: zodResolver(changeNameSchema) });
+    const sleepForm = useForm<ChangeSleepHoursFormData>({ resolver: zodResolver(changeSleepHoursSchema) });
+    const passwordForm = useForm<ChangePasswordFormData>({ resolver: zodResolver(changePasswordSchema) });
+    const emailForm = useForm<ChangeEmailFormData>({ resolver: zodResolver(changeEmailSchema) });
 
-    const handleNameSubmit = (data) => setUsername(data.username);
-    const handleSleepSubmit = (data) => setSleepHours(+data.sleepHours);
-    const handlePasswordSubmit = (data) => changePassword(data.oldPassword, data.newPassword);
-    const handleEmailSubmit = (data) => console.log('Zmieniono email:', data);
-
+    const handleNameSubmit = (data: ChangeNameFormData) => setUsername(data.username);
+    const handleSleepSubmit = (data: ChangeSleepHoursFormData) => setSleepHours(+data.sleepHours);
+    const handlePasswordSubmit = (data: ChangePasswordFormData) => changePassword(data.oldPassword, data.newPassword);
+    const handleEmailSubmit = (data: ChangeEmailFormData) => console.log('Zmieniono email:', data);
 
     return (
         <div className="w-full space-y-10 mb-24">
@@ -50,7 +57,7 @@ const ProfilePage = () => {
                     className="w-full bg-gray-400/5 p-4 rounded-xl focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
                 />
                 {nameForm.formState.errors.username?.message && (
-                    <p className="text-red-500">{String(nameForm.formState.errors.username.message)}</p>
+                    <p className="text-red-500">{nameForm.formState.errors.username.message}</p>
                 )}
                 <button type="submit" className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2">Zmień nazwę</button>
             </form>
@@ -64,7 +71,7 @@ const ProfilePage = () => {
                     className="w-full bg-gray-400/5 p-4 rounded-xl focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
                 />
                 {sleepForm.formState.errors.sleepHours?.message && (
-                    <p className="text-red-500">{String(sleepForm.formState.errors.sleepHours.message)}</p>
+                    <p className="text-red-500">{sleepForm.formState.errors.sleepHours.message}</p>
                 )}
                 <button type="submit" className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2">Zmień liczbę godzin snu</button>
             </form>
@@ -84,10 +91,10 @@ const ProfilePage = () => {
                     className="w-full bg-gray-400/5 p-4 rounded-xl focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
                 />
                 {passwordForm.formState.errors.oldPassword?.message && (
-                    <p className="text-red-500">{String(passwordForm.formState.errors.oldPassword.message)}</p>
+                    <p className="text-red-500">{passwordForm.formState.errors.oldPassword.message}</p>
                 )}
                 {passwordForm.formState.errors.newPassword?.message && (
-                    <p className="text-red-500">{String(passwordForm.formState.errors.newPassword.message)}</p>
+                    <p className="text-red-500">{passwordForm.formState.errors.newPassword.message}</p>
                 )}
                 <button type="submit" className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2">Zmień hasło</button>
             </form>
@@ -101,10 +108,15 @@ const ProfilePage = () => {
                     className="w-full bg-gray-400/5 p-4 rounded-xl focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
                 />
                 {emailForm.formState.errors.email?.message && (
-                    <p className="text-red-500">{String(emailForm.formState.errors.email.message)}</p>
+                    <p className="text-red-500">{emailForm.formState.errors.email.message}</p>
                 )}
                 <button type="submit" className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2">Zmień email</button>
             </form>
+
+            <button className="w-full bg-red-700 text-white py-2 px-4 rounded-xl hover:bg-red-600 flex items-center justify-center space-x-2" onClick={() => {
+                logout();
+                redirect('/')
+            }}>Wyloguj się</button>
         </div>
     );
 };

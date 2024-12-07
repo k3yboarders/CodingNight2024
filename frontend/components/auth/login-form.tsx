@@ -124,13 +124,9 @@ export const LoginForm = () => {
                     className="w-full rounded-[3rem] p-[2px] bg-gradient-to-r from-gradient-2 to-gradient-1"
                     disabled={isPending}
                 >
-                    <motion.div 
-                        className="p-2 bg-background rounded-[calc(3rem-2px)]"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
+                    <div className="p-2 bg-background rounded-[calc(3rem-2px)]">
                         {isPending ? "Logowanie..." : "Zaloguj się"}
-                    </motion.div>
+                    </div>
                 </button>
 
                 <div className="text-center space-y-2">
