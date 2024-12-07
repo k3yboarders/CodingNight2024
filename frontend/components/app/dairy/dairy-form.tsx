@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { DairySchema } from "@/schemas/dairy";
 import { createNote } from "@/actions/notes";
+import { redirect } from "next/navigation";
 
 export const DairyForm = () => {
     const {
@@ -20,8 +21,8 @@ export const DairyForm = () => {
         createNote({
             ...data,
             day: new Date(),
-        }).then((res) => {
-            console.log(res);
+        }).then(() => {
+            redirect("/app/dairy");
         });
     };
 

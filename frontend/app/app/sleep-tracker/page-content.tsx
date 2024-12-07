@@ -1,4 +1,5 @@
-"use client";;
+"use client";
+
 import { PlusIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import BarChart from "./bar-chart";
 import Link from "next/link";
