@@ -21,7 +21,9 @@ export class NoteController {
 
   @Get('/suggestion')
   async getSuggestions(@GetUser() user: JwtAuthDto) {
-    return await this.noteService.getSuggestions(user.userId);
+    return { 
+      suggestions: await this.noteService.getSuggestions(user.userId),
+    }
   }
 
   @Get('/suggestion/:id')
@@ -29,7 +31,9 @@ export class NoteController {
     @GetUser() user: JwtAuthDto,
     @Param('id') id: string,
   ) {
-    return await this.noteService.getSuggestionForNote(id, user.userId);
+    return {
+      suggestions: await this.noteService.getSuggestionForNote(id, user.userId),
+    }
   }
 
   @Get('/suggestion/month/:date')
@@ -37,7 +41,12 @@ export class NoteController {
     @GetUser() user: JwtAuthDto,
     @Param('date') date: Date,
   ) {
-    return await this.noteService.getSuggestionsForMonth(user.userId, date);
+    return {
+      suggestions: await this.noteService.getSuggestionsForMonth(
+        user.userId,
+        date,
+      ),
+    }
   }
 
   @Get('streak')

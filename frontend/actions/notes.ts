@@ -14,7 +14,7 @@ export const getSuggestions = async () =>
 
 export const getSuggestion = async (id: string) =>
   makeRequest(
-    `note/suggestions/${id}`,
+    `note/suggestion/${id}`,
     "GET",
     true,
     "Błąd w trakcie pobierania sugestii"
@@ -22,7 +22,7 @@ export const getSuggestion = async (id: string) =>
   
 export const getSuggestionsByMonth = async (date: Date) =>
   makeRequest(
-    `note/suggestions/month/${encodeURIComponent(date.toISOString())}`,
+    `note/suggestion/month/${encodeURIComponent(date.toISOString())}`,
     "GET",
     true,
     "Błąd w trakcie pobierania sugestii z miesiąca"

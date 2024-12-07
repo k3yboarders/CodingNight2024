@@ -23,14 +23,18 @@ export class NoteService {
     });
   }
 
-  async getNotesByMonth(fullDate: Date, userId: string): Promise<NoteDto[]> {
-    const date = new Date(fullDate);
+  async getNotesByMonth(fullDate: Date, userId: string) {
+    const newDate = new Date(fullDate);
     return await this.prisma.note.findMany({
       where: {
         userId,
         day: {
-          gte: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-01`),
-          lte: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-31`),
+          gte: new Date(
+            `${newDate.getFullYear()}-${newDate.getMonth() + 1}-01`,
+          ),
+          lte: new Date(
+            `${newDate.getFullYear()}-${newDate.getMonth() + 1}-31`,
+          ),
         },
       },
     });
