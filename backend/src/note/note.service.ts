@@ -54,7 +54,7 @@ export class NoteService {
   }
   async getSuggestions(userId: string) {
     const notes = await this.getAllUsersNotes(userId);
-    return this.gemini.generateTextWithNotes(
+    return this.gemini.generateTextWithData(
       SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
       notes,
     );
