@@ -20,9 +20,10 @@ export const CheckMonthDialog = ({ date, children }: { date: Date; children: Rea
         (async () => {
             setIsLoading(true);
             const output = await getSuggestionsByMonth(date);
-            console.log(output);
-            setData(output ?? null);
-            setIsLoading(false);
+            if (output.suggestions) {
+                setData(output.suggestions ?? null);
+                setIsLoading(false);
+            }
         })();
     }, [isOpen, date]);
 
@@ -47,7 +48,7 @@ export const CheckMonthDialog = ({ date, children }: { date: Date; children: Rea
                     ) : (
                         <>
                             <p className="text-justify">{data}</p>
-                            <div className="flex justify-between items-center w-full">
+                            <div className="flex justify-between items-center space-x-2 w-full">
                                 <div className="flex flex-col space-y-1">
                                     <p className="text-sm font-light">
                                         Szacowana ocena AI nie zawsze musi być wiarygodna

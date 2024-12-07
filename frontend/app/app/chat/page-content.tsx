@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { getPsychologist } from "../../../actions/chat";
+import { getPsychologist } from "@/actions/chat";
 import { motion } from "framer-motion";
 
 export default function FindPsychologist() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const handleFindPsychologist = async () => {
         setLoading(true);

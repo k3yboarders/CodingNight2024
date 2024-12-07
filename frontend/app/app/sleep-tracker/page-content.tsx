@@ -29,7 +29,6 @@ const PageContent = () => {
         return date;
     }
 
-    const [records, setRecords] = useState([]);
     const [data, setData] = useState([]);
     const [from, setFrom] = useState(getFirstDayOfWeek(new Date()));
     const [to, setTo] = useState(getLastDayOfWeek(new Date()));
@@ -44,7 +43,7 @@ const PageContent = () => {
                 const recordDate = new Date(record.to);
                 return recordDate >= fromDate && recordDate <= toDate;
             })
-            const data1 = Array(7).fill(0);
+            const data1: number[] = Array(7).fill(0);
             filtered.forEach((record: { from: Date; to: Date; comment: string; }) => {
                 const dateTo = new Date(record.to);
                 const dateFrom = new Date(record.from);
@@ -52,11 +51,11 @@ const PageContent = () => {
                 const diff = dateTo.getTime() - dateFrom.getTime();
                 console.log(dateTo.toISOString(), diff);
                 const index = (dateTo.getUTCDay() == 0)? 6: dateTo.getUTCDay() - 1;
-               data1[index] = (diff / 1000 / 60 / 60).toFixed(2);
+               data1[index] = +(diff / 1000 / 60 / 60).toFixed(2);
             })
-            setData(data1);
+            //eslint-disable-next-line
+            setData(data1 as any);
 
-            setRecords(filtered);
         } catch (error) {
             console.error("Error fetching notes:", error);
         }

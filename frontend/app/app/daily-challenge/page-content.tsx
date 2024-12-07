@@ -6,7 +6,7 @@ import { FireIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-const PageContent = ({ streak, dailyChallenge }: any) => {
+const PageContent = ({ streak, dailyChallenge }: { streak: string, dailyChallenge: { isCompleted: boolean, title: string, description: string, id: string }}) => {
     const router = useRouter();
     const handleComplete = async () => {
         completeDailyChallenge(dailyChallenge.id).then(() => {

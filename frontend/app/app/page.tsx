@@ -17,7 +17,6 @@ const AppPage = async () => {
     });
     const diaryStreak = await getStreak();
     const streak = await getDailyChallengeStreak();
-    console.log(sleepData)
     return <PageContent quote={quote.data} sleepData={sleepData.data} diaryStreak={diaryStreak.currentStreak} dailyChallengeStreak={streak.currentStreak} />;
 }
 
