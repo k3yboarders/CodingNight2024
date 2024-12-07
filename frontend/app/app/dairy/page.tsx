@@ -1,9 +1,10 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, ArrowRightIcon, PlusIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { getNote, getNotesByMonth } from "@/actions/notes";
+import { getNotesByMonth } from "@/actions/notes";
+import { CheckMonthDialog } from "@/app/app/check-month-dialog";
 
 const DairyPage = () => {
     const currentDate = new Date();
@@ -35,6 +36,7 @@ const DairyPage = () => {
     }, [date]);
 
     return (
+        <>
         <div className="w-full space-y-6">
             <div className="relative w-full flex items-center justify-center">
                 <h1 className="text-center text-3xl">Pamiętnik</h1>
@@ -59,7 +61,7 @@ const DairyPage = () => {
                         title: string;
                         day: Date;
                     }, index) => (
-                        <Link href={`/app/dairy/${note.id}`} key={index} className="flex bg-gray-200/15 rounded-lg cursor-pointer" >
+                        <Link href={`/app/dairy/${note.id}`} key={index} className="flex bg-gray-400/10 rounded-lg cursor-pointer" >
                             <div className="flex flex-col items-center justify-center bg-gradient-1/70 py-2 px-4 rounded-l-lg">
                                 <p className="font-bold text-lg">{new Date(note.day).getDate()}</p>
                                 <p className="uppercase">{new Date(note.day).toLocaleString('pl-PL', { weekday: 'short' })}</p>
@@ -71,8 +73,22 @@ const DairyPage = () => {
                     <p className="text-center text-white/70">Brak wpisów na ten miesiąc.</p>
                 )}
             </div>
-        </div>
-    );
-};
+                </div>
 
-export default DairyPage;
+            {notes.length > 0 && (
+                <div className="fixed flex p-5 bottom-24 w-full items-center justify-center -ml-5">
+                    <CheckMonthDialog date={date}>
+                        <div
+                            className="flex items-center justify-center space-x-2 py-2 px-4 rounded-xl bg-gradient-1/70">
+                            <SparklesIcon className="size-6 text-yellow-500"/>
+                            <p>Zbadaj swój miesiąc</p>
+                            <SparklesIcon className="size-6 text-yellow-500"/>
+                        </div>
+                    </CheckMonthDialog>
+                </div>
+            )}
+        </>
+            );
+            };
+
+            export default DairyPage;

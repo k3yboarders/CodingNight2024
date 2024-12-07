@@ -1,4 +1,7 @@
-"use client";;
+"use client";
+import { SparklesIcon } from "@heroicons/react/24/solid";
+
+;
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import BarChart from "./bar-chart";
 import Link from "next/link";
@@ -148,7 +151,7 @@ const PageContent = () => {
                 </Link>
             </motion.div>
             <motion.div
-                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full mt-5 gap-2"
+                className="flex flex-col bg-gray-400/10 rounded-lg p-6 w-full mt-8 gap-2"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -158,8 +161,10 @@ const PageContent = () => {
                     {analysis?.generatedAnalysis}
                 </p>
                 {!analysis && (
-                    <button className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2" onClick={() => fetchAnalysis(true)}>
-                        Wygeneruj analizę snu
+                    <button className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2 flex" onClick={() => fetchAnalysis(true)}>
+                        <SparklesIcon className="size-6 text-yellow-500" />
+                       <p>Wygeneruj analizę snu</p>
+                        <SparklesIcon className="size-6 text-yellow-500" />
                     </button>
                 )}
 

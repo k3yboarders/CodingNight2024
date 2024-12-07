@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { AlertDialogWrapper } from "@/components/app/dairy/alert-dialog-wrapper";
 import Link from "next/link";
 import { SparklesIcon } from "@heroicons/react/24/solid";
+import { CheckDayDialog } from "@/app/app/check-day-dialog";
 
 interface DisplayDairyPageProps {
     params: {
@@ -37,11 +38,13 @@ const DisplayDairyPage = async ({ params }: DisplayDairyPageProps) => {
                 <p className="text-center text-white/90">{formattedDate}</p>
             </div>
 
-            <div className="flex items-center justify-center space-x-2 py-2 px-4 rounded-xl bg-gradient-1/70">
-                <SparklesIcon className="size-6 text-yellow-500" />
-                <p>Zbadaj swój dzień</p>
-                <SparklesIcon className="size-6 text-yellow-500" />
-            </div>
+            <CheckDayDialog id={id}>
+                <div className="flex items-center justify-center space-x-2 py-2 px-4 rounded-xl bg-gradient-1/70">
+                    <SparklesIcon className="size-6 text-yellow-500" />
+                    <p>Zbadaj swój dzień</p>
+                    <SparklesIcon className="size-6 text-yellow-500" />
+                </div>
+            </CheckDayDialog>
 
             <Link href={`/app/dairy/edit/${id}`} className="flex flex-col items-center justify-center space-y-1 py-2 px-4 rounded-xl bg-gradient-1/70">
                 Edytuj wpis
