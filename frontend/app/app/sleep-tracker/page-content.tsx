@@ -19,14 +19,14 @@ const PageContent = () => {
                 <p><span className="font-bold">02.12.2024 - 08.12.2024 </span></p>
                 <ArrowRightIcon className="size-8" />
             </div>
-            <div className="flex mt-8 items-center content-center w-full">
+            <div className="mt-8">
                 <div>
                     <BarChart data={data} labels={labels} />
                 </div>
             </div>
             <div className="flex justify-center mt-5">
                 <Link
-                    className={'flex flex-col items-center justify-center space-y-1 text-lg p-3 rounded-full bg-gradient-1/70'}
+                    className={'flex flex-col items-center justify-center space-y-1 py-2 px-4 rounded-full bg-gradient-1/70'}
                     href="/app/sleep-tracker/add">
                     Dodaj nowy wpis
                 </Link>
