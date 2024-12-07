@@ -44,7 +44,11 @@ export class NoteService {
   async updateNote(note: NoteDto, userId: string, noteId: string) {
     await this.prisma.note.update({
       where: { id: noteId },
-      data: Object.assign(note, { userId }),
+      data: {
+        title: note.title,
+        content: note.content,
+        day: note.day,
+      },
     });
   }
   async deleteNote(noteId: string) {
