@@ -7,7 +7,7 @@ const navItems = [
     { href: "/app", Icon: HomeIcon },
     { href: "/app/dairy", Icon: BookOpenIcon },
     { href: "/app/sleep-tracker", Icon: MoonIcon },
-    { href: "/", Icon: StarIcon },
+    { href: "/app/daily-challenge", Icon: StarIcon },
     { href: "/app/articles", Icon: NewspaperIcon },
     { href: "/app/profile", Icon: UserCircleIcon },
 ]

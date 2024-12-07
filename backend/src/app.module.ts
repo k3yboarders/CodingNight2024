@@ -8,9 +8,20 @@ import { NoteModule } from './note/note.module';
 import { SettingsModule } from './settings/settings.module';
 import { ChallengeModule } from './challenge/challenge.module';
 import { SleepTrackerModule } from './sleep-tracker/sleep-tracker.module';
+import { DailyChallengeModule } from './daily-challenge/daily-challenge.module';
 
 @Module({
   controllers: [AppController],
-  imports: [AuthModule, DbModule, QuotesModule, ArticleModule, SettingsModule, NoteModule, ChallengeModule, SleepTrackerModule],
+  imports: [
+    AuthModule,
+    DbModule,
+    QuotesModule,
+    ArticleModule,
+    SettingsModule,
+    DailyChallengeModule,
+    NoteModule,
+    ChallengeModule,
+    SleepTrackerModule,
+  ],
 })
 export class AppModule {}

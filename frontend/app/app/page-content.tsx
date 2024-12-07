@@ -4,7 +4,6 @@ import { BookOpenIcon, FireIcon, MoonIcon, StarIcon } from "@heroicons/react/24/
 import SleepDataComponent from "./sleep-data";
 
 const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepData: SleepData, diaryStreak: number }) => {
-
     return (
         <div className="w-full flex flex-col items-center justify-center gap-4">
             <HomeCard title="Cytat na dzisiaj" icon={
