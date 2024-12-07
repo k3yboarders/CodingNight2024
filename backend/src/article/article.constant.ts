@@ -1,0 +1,1 @@
+export const getArticleSuggestedTagsPrompt = (existingTags: string[]) => `Below is an article about youths' mental health. This is array of current tags: ${JSON.stringify(existingTags)}. Provide me 3 in-polish name-only camelCased tags based on existing ones. If there are not enough well-fitting tags, create new.`

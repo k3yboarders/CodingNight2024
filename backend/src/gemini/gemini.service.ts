@@ -28,12 +28,12 @@ export class GeminiService {
   }
 
   async generateTextWithData(prompt: string, rawObjects, key?: string) {
-    let objects = rawObjects;
+    let data = rawObjects;
     if(key) {
-      objects = this.objectsToArray(rawObjects, key);
+      data = this.objectsToArray(rawObjects, key);
     }
-    const processedPrompt = this.mergePromptWithData(prompt, objects);
-    if (!objects.length) {
+    const processedPrompt = this.mergePromptWithData(prompt, data);
+    if (data === undefined || Array.isArray(data) && !data.length) {
       throw new HttpException('No notes found', HttpStatus.NOT_FOUND);
     }
     return this.generateText(processedPrompt);

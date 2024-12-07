@@ -15,11 +15,12 @@ import { ArticleDto } from './dto/article.dto';
 import { GetUser } from 'src/auth/decorator/getUser.decorator';
 import { JwtAuthDto } from 'src/auth/dto/jwt-auth.dto';
 import { PsychologistGuard } from 'src/auth/guards/psychologist.guard';
+import { GeminiService } from 'src/gemini/gemini.service';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private readonly articleService: ArticleService, private readonly gemini: GeminiService) {}
 
   @Get()
   async getArticles(@Query('categoryId') categoryId: string) {
@@ -29,6 +30,12 @@ export class ArticleController {
   @Get('categories')
   async getArticleCategories() {
     return this.articleService.getArticleCategories;
+  }
+
+  @UseGuards(PsychologistGuard)
+  @Post('suggested-tag')
+  async suggestTags(@Body() data: ArticleDto, @GetUser() user: JwtAuthDto) {
+    return this.articleService.suggestTags(data, user.userId);
   }
 
   @UseGuards(PsychologistGuard)

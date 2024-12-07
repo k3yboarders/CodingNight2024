@@ -1,10 +1,12 @@
 import { DbService } from './../db/db.service';
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { ArticleDto } from './dto/article.dto';
+import { getArticleSuggestedTagsPrompt } from './article.constant';
+import { GeminiService } from 'src/gemini/gemini.service';
 
 @Injectable()
 export class ArticleService {
-  constructor(private readonly prisma: DbService) {}
+  constructor(private readonly prisma: DbService, private readonly gemini: GeminiService) {}
 
   async getArticleCategories() {
     return await this.prisma.articleCategory.findMany({
@@ -35,6 +37,10 @@ export class ArticleService {
       isBookmarked: article.bookmarkedArticles.length > 0,
       bookmarkedArticles: undefined,
     }));
+  }
+
+  async suggestTags(data: ArticleDto, userId: string) {
+    return await this.gemini.generateTextWithData(getArticleSuggestedTagsPrompt([]), data);
   }
 
   async updateArticle(articleId: string, data: ArticleDto, userId: string) {
