@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { NoteController } from './note.controller';
 import { NoteService } from './note.service';
 import { DbModule } from 'src/db/db.module';
-import { GeminiModule } from 'src/gemini/gemini.module';
+import { geminiNoteProvider } from 'src/gemini/gemini-note.provider';
 
 @Module({
   controllers: [NoteController],
-  providers: [NoteService],
-  imports: [DbModule, GeminiModule],
+  providers: [NoteService, geminiNoteProvider],
+  imports: [DbModule],
 })
 export class NoteModule {}

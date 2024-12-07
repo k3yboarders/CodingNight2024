@@ -1,16 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
-import { env } from 'process';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
+import { GenerativeModel } from '@google/generative-ai';
 
 @Injectable()
 export class GeminiService {
-  private readonly genAI: GenerativeModel;
-  constructor() {
-    const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
-    this.genAI = genAI.getGenerativeModel({
-      model: env.GEMINI_MODEL,
-    });
-  }
+  constructor(@Inject() private readonly genAI: GenerativeModel) {}
 
   async generateText(prompt: string): Promise<string> {
     const result = await this.genAI.generateContent(prompt);
@@ -18,5 +17,25 @@ export class GeminiService {
     const text = response.text();
 
     return text;
+  }
+
+  notesToArray(notes: { content: string }[]) {
+    return notes.map((note) => note.content);
+  }
+
+  mergePromptWithData(prompt: string, data: string[]) {
+    return prompt + JSON.stringify(data);
+  }
+
+  async generateTextWithNotes(
+    prompt: string,
+    noteObjects: { content: string }[],
+  ) {
+    const notes = this.notesToArray(noteObjects);
+    const processedPrompt = this.mergePromptWithData(prompt, notes);
+    if (!notes.length) {
+      throw new HttpException('No notes found', HttpStatus.NOT_FOUND);
+    }
+    return this.generateText(processedPrompt);
   }
 }

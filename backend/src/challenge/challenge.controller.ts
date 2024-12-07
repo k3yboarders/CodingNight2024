@@ -1,8 +1,9 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ChallengeService } from './challenge.service';
 import { GetUser } from 'src/auth/decorator/getUser.decorator';
 import { JwtAuthDto } from 'src/auth/dto/jwt-auth.dto';
+import { ChallengeDto } from './dto/challenge.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('challenge')
@@ -23,5 +24,10 @@ export class ChallengeController {
       user.userId,
       challengeId,
     );
+  }
+
+  @Post()
+  async createChallenge(@GetUser() user: JwtAuthDto, @Body() challenge: ChallengeDto) {
+    return await this.challengeService.createUserChallange(user.userId, challenge);
   }
 }
