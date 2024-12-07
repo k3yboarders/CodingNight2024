@@ -3,9 +3,9 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { DailyChallengeService } from './daily-challenge.service';
@@ -21,7 +21,7 @@ export class DailyChallengeController {
   constructor(private readonly dailyChallengeService: DailyChallengeService) {}
 
   @Get('/:date')
-  async getDailyChallenge(@Query('date') date: Date) {
+  async getDailyChallenge(@Param('date') date: Date) {
     return await this.dailyChallengeService.getDailyChallenge(date);
   }
 
@@ -35,7 +35,7 @@ export class DailyChallengeController {
 
   @UseGuards(PsychologistGuard)
   @Delete('/:id')
-  async deleteDailyChallenge(@Query('id') dailyChallengeId: string) {
+  async deleteDailyChallenge(@Param('id') dailyChallengeId: string) {
     return await this.dailyChallengeService.deleteDailyChallenge(
       dailyChallengeId,
     );
@@ -45,7 +45,7 @@ export class DailyChallengeController {
   @Put('/:id')
   async updateDailyChallenge(
     @Body() dailyChallenge: DailyChallengeDto,
-    @Query('id') dailyChallengeId: string,
+    @Param('id') dailyChallengeId: string,
     @GetUser() user: JwtAuthDto,
   ) {
     return await this.dailyChallengeService.updateDailyChallenge(
