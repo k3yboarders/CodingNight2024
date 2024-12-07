@@ -4,7 +4,7 @@ import { BookOpenIcon, FireIcon, MoonIcon, StarIcon } from "@heroicons/react/24/
 import SleepDataComponent from "./sleep-data";
 import Link from "next/link";
 
-const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepData: SleepData, diaryStreak: number }) => {
+const PageContent = ({ quote, sleepData, diaryStreak, dailyChallengeStreak }: { quote: Quote, dailyChallengeStreak: number, sleepData: SleepData, diaryStreak: number }) => {
     return (
         <div className="w-full flex flex-col items-center justify-center gap-4">
             <HomeCard title="Cytat na dzisiaj" icon={
@@ -43,11 +43,11 @@ const PageContent = ({ quote, sleepData, diaryStreak }: { quote: Quote, sleepDat
             <HomeCard title="Wyzwanie dnia" icon={<StarIcon className="size-6" />} endItem={
                 <div className="flex gap-2  items-center mb-2">
                     <FireIcon className=" text-orange-600 size-10" />
-                    <p className=" text-white/90">9 dni</p>
+                    <p className=" text-white/90">{dailyChallengeStreak} dni</p>
                 </div>
             }>
-                <div className="flex flex-col gap-8 items-center mb-2">
-                    <p className="text-white/90">Już od 9 dni konsekwentnie bierzesz udział w dziennych wyzwaniach.</p>
+                <div className="flex flex-col gap-2 items-center mb-2">
+                    <p className="text-white/90">Już od {dailyChallengeStreak} dni konsekwentnie bierzesz udział w dziennych wyzwaniach.</p>
                     <button className="bg-gradient-1/70 text-white py-2 px-4 w-full rounded-xl hover:bg-gradient-1/80">Weź udział!</button>
                 </div>
             </HomeCard>
