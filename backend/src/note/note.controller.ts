@@ -24,6 +24,11 @@ export class NoteController {
     return await this.noteService.getSuggestions(user.userId);
   }
 
+  @Get('streak')
+  async getStreak(@GetUser() user: JwtAuthDto) {
+    return await this.noteService.getLatestStreak(user.userId);
+  }
+
   @Get()
   async getAllNotes(@GetUser() user: JwtAuthDto) {
     return await this.noteService.getAllUsersNotes(user.userId);

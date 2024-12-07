@@ -24,17 +24,19 @@ export class NoteService {
   }
 
   async getNotesByMonth(fullDate: Date): Promise<NoteDto[]> {
+    const date = new Date(fullDate);
     return await this.prisma.note.findMany({
       where: {
         day: {
-          gte: new Date(fullDate.getFullYear(), fullDate.getMonth(), 0),
-          lte: new Date(fullDate.getFullYear(), fullDate.getMonth() + 1, 0),
+          gte: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-01`),
+          lte: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-31`),
         },
       },
     });
   }
 
   async createNote(note: NoteDto, userId: string) {
+    console.log(note);
     await this.prisma.note.create({
       data: Object.assign(note, { userId }),
     });
@@ -59,5 +61,28 @@ export class NoteService {
     const readPrompt =
       SUGGESTIONS_BASED_ON_HISTORY_PROMPT + JSON.stringify(arrayOfNotes);
     return this.gemini.generateText(readPrompt);
+  }
+
+  async getLatestStreak(userId: string) {
+    const notes = await this.getAllUsersNotes(userId);
+    const sortedNotes = notes.sort((a, b) => {
+      return new Date(b.day).getTime() - new Date(a.day).getTime();
+    });
+    let streak = 0;
+    let currentStreak = 0;
+    let lastDay = new Date();
+    sortedNotes.forEach((note) => {
+      const day = new Date(note.day);
+      if (lastDay.getTime() - day.getTime() === 86400000) {
+        currentStreak++;
+      } else {
+        if (currentStreak > streak) {
+          streak = currentStreak;
+        }
+        currentStreak = 0;
+      }
+      lastDay = day;
+    });
+    return { currentStreak };
   }
 }

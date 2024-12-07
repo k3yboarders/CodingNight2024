@@ -36,7 +36,7 @@ export const backendRequest = async (
 export const makeRequest = async (path: string, method: string,
      useAuth: boolean, errorMsg: string, successMsg?: string, body?: unknown) => {
     try {
-        const response = await backendRequest(path, method, useAuth, body);
+        const response = await backendRequest(path, method, useAuth, body)
         if (response.ok) {
             switch(method) {
                 case 'GET':

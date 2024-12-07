@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 export class NoteDto {
   @IsNotEmpty()
@@ -8,10 +8,6 @@ export class NoteDto {
   @IsString()
   @IsNotEmpty()
   title: string;
-
-  @IsString()
-  @IsUUID()
-  userId: string;
 
   @IsDate()
   day: Date;

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { DairySchema } from "@/schemas/dairy";
+import { createNote } from "@/actions/notes";
 
 export const DairyForm = () => {
     const {
@@ -16,7 +17,12 @@ export const DairyForm = () => {
     });
 
     const onSubmit = (data: z.infer<typeof DairySchema>) => {
-        console.log("Form data:", data);
+        createNote({
+            ...data,
+            day: new Date(),
+        }).then((res) => {
+            console.log(res);
+        });
     };
 
     return (
