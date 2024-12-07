@@ -35,6 +35,7 @@ export const login = async (
     try {
         const response = await backendRequest('auth/login', 'POST', false, values);
         if (response.ok) {
+            console.log(response)
             const data = await response.json();
             const cookieStore = await cookies();
             cookieStore.set('token', data.token);

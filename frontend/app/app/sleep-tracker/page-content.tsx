@@ -1,4 +1,5 @@
 "use client";
+import animationData from '@/public/ai-generating.json';
 import { SparklesIcon } from "@heroicons/react/24/solid";
 
 ;
@@ -9,6 +10,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { getSleepAnalysis, getSleepRecords,  } from "@/actions/sleep-tracker";
 import { SleepAnalysis } from "@/types";
+import { set } from "zod";
+import { LottieAnimation } from "@/components/lottie-animation";
 
 const PageContent = () => {
     const labels = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
@@ -33,6 +36,7 @@ const PageContent = () => {
     const [from, setFrom] = useState(getFirstDayOfWeek(new Date()));
     const [to, setTo] = useState(getLastDayOfWeek(new Date()));
     const [analysis, setAnalysis] = useState<SleepAnalysis | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
 
 
@@ -67,8 +71,9 @@ const PageContent = () => {
             fromDate.setHours(0, 0, 0, 0);
             const toDate = new Date(to);
             toDate.setHours(23, 59, 59, 999);
+            setIsLoading(true);
             const response = await getSleepAnalysis({ from: fromDate.toISOString(), to: toDate.toISOString(), generate });
-            console.log(response);
+            setIsLoading(false);
             setAnalysis(response[0]);
         } catch (error) {
             console.error("Error fetching notes:", error);
@@ -159,12 +164,18 @@ const PageContent = () => {
                 <p className="text-white/90 text-center">
                     {analysis?.generatedAnalysis}
                 </p>
-                {!analysis && (
+
+                {!isLoading && !analysis ? (
                     <button className="w-full bg-gradient-1/70 text-white py-2 px-4 rounded-xl hover:bg-gradient-1/80 flex items-center justify-center space-x-2 flex" onClick={() => fetchAnalysis(true)}>
                         <SparklesIcon className="size-6 text-yellow-500" />
                        <p>Wygeneruj analizę snu</p>
                         <SparklesIcon className="size-6 text-yellow-500" />
                     </button>
+                ) : (!analysis &&
+                    <div className="flex items-center space-x-2">
+                        <LottieAnimation animationData={animationData} loop={true} autoplay={true} size={4} />
+                        <p>Oczekiwanie na odpowiedź sztucznej inteligencji...</p>
+                    </div>
                 )}
 
             </motion.div>

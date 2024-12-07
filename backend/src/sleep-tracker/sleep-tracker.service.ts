@@ -83,7 +83,7 @@ export class SleepTrackerService {
         SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
         sleepRecordsWithoutTrash,
       );
-      return await this.prisma.sleepAnalysis.create({
+      const sleepAnalysis = await this.prisma.sleepAnalysis.create({
         data: {
           userId,
           from,
@@ -91,6 +91,7 @@ export class SleepTrackerService {
           generatedAnalysis: analysis,
         },
       });
+      return [sleepAnalysis];
     }
     return analysisFromDb;
   }
