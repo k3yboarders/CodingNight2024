@@ -45,7 +45,7 @@ export const Hero = ({ quote }: { quote: Quote }) => {
                 <GradientLink href="/app">
                     Rozpocznij swoją przygodę
                 </GradientLink>
-                <GradientLink href="https://google.com" external>
+                <GradientLink href="https://github.com/k3yboarders" external>
                     Wspieraj nas
                 </GradientLink>
             </motion.div>
