@@ -69,7 +69,7 @@ export class SleepTrackerService {
       where: {
         userId,
         to: {
-          gte: day,
+          gte: new Date(day),
         },
       },
       include: {
@@ -80,11 +80,18 @@ export class SleepTrackerService {
         },
       },
     });
+    if (!sleepRecord) {
+      return {
+        hours: 0,
+        expectedSleepTime: 0,
+      };
+    }
     return {
       ...sleepRecord,
       hours:
         new Date(sleepRecord.to).getHours() -
         new Date(sleepRecord.from).getHours(),
+      expectedSleepTime: sleepRecord.user.expectedSleepTime,
     };
   }
 }

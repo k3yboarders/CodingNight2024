@@ -1,14 +1,10 @@
 import { HomeCard } from "@/components/app/home-card";
-import { Quote } from "@/types";
+import { Quote, SleepData } from "@/types";
 import { BookOpenIcon, FireIcon, MoonIcon, StarIcon } from "@heroicons/react/24/outline";
+import SleepDataComponent from "./sleep-data";
 
-const PageContent = ({ quote }: { quote: Quote }) => {
-    const sleepData = {
-        hours: 6,
-        expectedHours: 8,
-    };
-    const filledPercentage = Math.min((sleepData.hours / sleepData.expectedHours) * 100, 100).toFixed(0); // Cap at 100%
-    const unfilledPercentage = (100 - +filledPercentage).toFixed(0);
+const PageContent = ({ quote, sleepData }: { quote: Quote, sleepData: SleepData }) => {
+
     return (
         <div className="w-full flex flex-col items-center justify-center gap-4">
             <HomeCard title="Cytat na dzisiaj" icon={
@@ -25,17 +21,7 @@ const PageContent = ({ quote }: { quote: Quote }) => {
             <HomeCard title="Sen" icon={
                 <MoonIcon className="size-6" />
             }>
-                <p className=" text-white/90">Dzisiaj spałeś {sleepData.hours} godzin.</p>
-                <div className="flex">
-                    <div
-                        className="bg-gradient-1/70 p-3 mt-3 rounded-l-lg"
-                        style={{ width: `${filledPercentage}%` }}
-                    ></div>
-                    <div
-                        className="bg-gradient-1/20 p-3 mt-3 rounded-r-lg"
-                        style={{ width: `${unfilledPercentage}%` }}
-                    ></div>
-                </div>
+                <SleepDataComponent sleepData={sleepData} />
             </HomeCard>
             <HomeCard title="Pamiętnik" icon={<BookOpenIcon className="size-6" />} endItem={
                 <div className="flex gap-2  items-center mb-2">
