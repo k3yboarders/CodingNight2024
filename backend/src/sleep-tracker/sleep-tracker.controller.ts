@@ -20,6 +20,10 @@ import { SleepTrackerService } from './sleep-tracker.service';
 export class SleepTrackerController {
   constructor(private readonly sleepTrackerService: SleepTrackerService) {}
 
+  @Get()
+  async getSleepRecords(@GetUser() user: JwtAuthDto) {
+    return this.sleepTrackerService.getSleepRecords(user.userId);
+  }
   @Post()
   async addSleepRecord(
     @Body() data: SleepRecordDto,
@@ -41,8 +45,14 @@ export class SleepTrackerController {
     @GetUser() user: JwtAuthDto,
     @Query('from') from: Date,
     @Query('to') to: Date,
+    @Query('generate') generate: boolean,
   ) {
-    return this.sleepTrackerService.getSleepAnalysis(from, to, user.userId);
+    return this.sleepTrackerService.getSleepAnalysis(
+      from,
+      to,
+      user.userId,
+      generate,
+    );
   }
 
   @Delete(':id')

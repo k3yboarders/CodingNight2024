@@ -15,7 +15,7 @@ const AppPage = async () => {
         date: new Date(),
     });
     const diaryStreak = await getStreak();
-    console.log(diaryStreak)
+    console.log(sleepData)
     return <PageContent quote={quote.data} sleepData={sleepData.data} diaryStreak={diaryStreak.currentStreak} />;
 }
 

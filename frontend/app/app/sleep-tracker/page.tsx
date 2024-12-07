@@ -1,6 +1,6 @@
 import PageContent from "./page-content";
 
-const SleepTracker = () => {
+const SleepTracker = async () => {
     return <PageContent />;
 }
 

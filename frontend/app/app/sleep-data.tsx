@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SleepDataComponent = ({ sleepData }: { sleepData: SleepData }) => {
     if (sleepData && sleepData.hours > 0) {
-        const filledPercentage = Math.min((sleepData.hours / sleepData.expectedSleepTime) * 100, 100).toFixed(0);
+        const filledPercentage = sleepData.hours > sleepData.expectedSleepTime ? 100 : (sleepData.hours / sleepData.expectedSleepTime) * 100;
         const unfilledPercentage = (100 - +filledPercentage).toFixed(0);
         return (
             <>
@@ -13,10 +13,12 @@ const SleepDataComponent = ({ sleepData }: { sleepData: SleepData }) => {
                         className="bg-gradient-1/70 p-3 mt-3 rounded-l-lg"
                         style={{ width: `${filledPercentage}%` }}
                     ></div>
-                    <div
-                        className="bg-gradient-1/20 p-3 mt-3 rounded-r-lg"
-                        style={{ width: `${unfilledPercentage}%` }}
-                    ></div>
+                    {+unfilledPercentage > 0 && (
+                        <div
+                            className="bg-gradient-1/20 p-3 mt-3 rounded-r-lg"
+                            style={{ width: `${unfilledPercentage}%` }}
+                        ></div>
+                    )}
                 </div>
             </>
         );

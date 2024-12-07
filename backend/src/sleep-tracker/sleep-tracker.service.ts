@@ -7,7 +7,10 @@ import { SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT } from './sleep-track
 @Injectable()
 export class SleepTrackerService {
   private readonly logger = new Logger(SleepTrackerService.name);
-  constructor(private readonly prisma: DbService, private readonly gemini: GeminiService) {}
+  constructor(
+    private readonly prisma: DbService,
+    private readonly gemini: GeminiService,
+  ) {}
 
   async addSleepRecord(data: SleepRecordDto, userId: string) {
     return this.prisma.sleepRecord.create({
@@ -45,8 +48,12 @@ export class SleepTrackerService {
     });
   }
 
-
-  async getSleepAnalysis(from: Date, to: Date, userId: string) {
+  async getSleepAnalysis(
+    from: Date,
+    to: Date,
+    userId: string,
+    generate = false,
+  ) {
     const analysisFromDb = await this.prisma.sleepAnalysis.findMany({
       where: {
         userId,
@@ -54,21 +61,28 @@ export class SleepTrackerService {
         to: to,
       },
     });
-    if (!analysisFromDb.length) {
+    if (!analysisFromDb.length && generate) {
       const sleepRecords = await this.getSleepRecords(userId);
       const sleepRecordsWithoutTrash = sleepRecords.map((record) => {
         return {
           from: new Date(record.from),
           to: new Date(record.to),
+          comment: record.comment,
         };
-      })
+      });
       if (!from && sleepRecordsWithoutTrash[0]) {
         from = sleepRecordsWithoutTrash[0].from;
       }
-      if (!to && sleepRecordsWithoutTrash[sleepRecordsWithoutTrash.length - 1]) {
+      if (
+        !to &&
+        sleepRecordsWithoutTrash[sleepRecordsWithoutTrash.length - 1]
+      ) {
         to = sleepRecordsWithoutTrash[sleepRecordsWithoutTrash.length - 1].to;
       }
-      const analysis = await this.gemini.generateTextWithData(SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT, sleepRecordsWithoutTrash);
+      const analysis = await this.gemini.generateTextWithData(
+        SLEEP_TRACKER_SUGGESTIONS_BASED_ON_HISTORY_PROMPT,
+        sleepRecordsWithoutTrash,
+      );
       return await this.prisma.sleepAnalysis.create({
         data: {
           userId,
@@ -76,7 +90,7 @@ export class SleepTrackerService {
           to,
           generatedAnalysis: analysis,
         },
-      })
+      });
     }
     return analysisFromDb;
   }
@@ -113,9 +127,10 @@ export class SleepTrackerService {
     }
     return {
       ...sleepRecord,
-      hours:
+      hours: Math.abs(
         new Date(sleepRecord.to).getHours() -
-        new Date(sleepRecord.from).getHours(),
+          new Date(sleepRecord.from).getHours(),
+      ),
       expectedSleepTime: sleepRecord.user.expectedSleepTime,
     };
   }

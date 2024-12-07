@@ -4,7 +4,9 @@ import { backendRequest, makeRequest } from "./backend";
 
 export const getSleepDataByDay = async (values: { date: Date }) => {
   try {
-    const formattedDate = `${values.date.getFullYear()}-${values.date.getMonth() + 1}-${values.date.getDate()}`;
+    const formattedDate = `${values.date.getFullYear()}-${
+      values.date.getMonth() + 1
+    }-${values.date.getDate()}`;
     const response = await backendRequest(
       `sleep-tracker/day/${formattedDate}`,
       "GET",
@@ -19,23 +21,55 @@ export const getSleepDataByDay = async (values: { date: Date }) => {
     console.error("Error logging in:", error);
     return { error: "Coś poszło nie tak!", success: null };
   }
-}
+};
 
-export const addSleepRecord = async (values: { from: Date; to: Date; comment: string }) =>
-    makeRequest('sleep-tracker', 'POST', true, 
-        'Błąd w trakcie dodawania trackera snu',
-        'Pomyślnie dodano trackera snu', values);
+export const addSleepRecord = async (values: {
+  from: Date;
+  to: Date;
+  comment: string;
+}) =>
+  makeRequest(
+    "sleep-tracker",
+    "POST",
+    true,
+    "Błąd w trakcie dodawania trackera snu",
+    "Pomyślnie dodano trackera snu",
+    values
+  );
 
-export const updateSleepRecord =
-async (values: { from: Date; to: Date; comment: string }, id: string) =>
-    makeRequest(`sleep-tracker/${id}`, 'PUT', true, 
-        'Błąd w trakcie aktualizacji trackera snu',
-        'Pomyślnie zaktualizowano tracker snu', values);
-        
-export const getSleepAnalysis = async (values: { from: Date; to: Date }) =>
-    makeRequest(`sleep-tracker/analysis?from=${values.from}&to=${values.to}`, 'GET', true, 
-        'Błąd w trakcie pobierania analizy snu');
-    
+export const updateSleepRecord = async (
+  values: { from: Date; to: Date; comment: string },
+  id: string
+) =>
+  makeRequest(
+    `sleep-tracker/${id}`,
+    "PUT",
+    true,
+    "Błąd w trakcie aktualizacji trackera snu",
+    "Pomyślnie zaktualizowano tracker snu",
+    values
+  );
+
+export const getSleepAnalysis = async (values: { from: string; to: string, generate: boolean }) =>
+  makeRequest(
+    `sleep-tracker/analysis?from=${values.from}&to=${values.to}&generate=${values.generate}`,
+    "GET",
+    true,
+    "Błąd w trakcie pobierania analizy snu"
+  );
+
 export const deleteSleepRecord = async (id: string) =>
-    makeRequest(`sleep-tracker/${id}`, 'DELETE', true, 
-        'Błąd w trakcie usuwania trackera snu');
+  makeRequest(
+    `sleep-tracker/${id}`,
+    "DELETE",
+    true,
+    "Błąd w trakcie usuwania trackera snu"
+  );
+
+export const getSleepRecords = async () =>
+  makeRequest(
+    "sleep-tracker",
+    "GET",
+    true,
+    "Błąd w trakcie pobierania trackera snu"
+    );

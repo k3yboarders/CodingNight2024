@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion"; // Import framer-motion
 import { SleepRecordSchema } from "@/schemas/sleep-record";
+import { addSleepRecord } from "@/actions/sleep-tracker";
+import { redirect } from "next/navigation";
 
 const getYesterdayAt2300 = () => {
     const now = new Date();
@@ -32,6 +34,14 @@ export const NewForm = () => {
 
     const onSubmit = (data: z.infer<typeof SleepRecordSchema>) => {
         console.log("Form data:", data);
+        addSleepRecord({
+            ...data,
+            from: new Date(data.from),
+            to: new Date(data.to),
+        }).then((res) => {
+            console.log(res);
+            redirect("/app/sleep-tracker");
+        }); 
     };
 
     // Animacja wejścia poszczególnych elementów
@@ -82,13 +92,13 @@ export const NewForm = () => {
                 <motion.div {...fadeInUp}>
                     <p className="text-white/90 mb-2">Jak Ci się spało?</p>
                     <textarea
-                        {...register("content")}
+                        {...register("comment")}
                         className="w-full bg-gray-400/5 p-4 rounded-xl resize-none focus:ring-2 focus:ring-gradient-1/50 focus:outline-none"
                         rows={10}
                         placeholder="Miałem dzisiaj świetny sen..."
                     />
-                    {errors.content && (
-                        <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
+                    {errors.comment && (
+                        <p className="text-red-500 text-sm mt-1">{errors.comment.message}</p>
                     )}
                 </motion.div>
 
